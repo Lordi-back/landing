@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Портфолио проектов | AI & Automation</title>
+    <style>
+        :root {
+            --bg: #0a0a0f;
+            --surface: #13131a;
+            --surface-hover: #1a1a24;
+            --border: #2a2a3a;
+            --text: #e0e0e8;
+            --text-secondary: #9a9ab0;
+            --accent-1: #6366f1;
+            --accent-2: #8b5cf6;
+            --accent-3: #06b6d4;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --gradient-1: linear-gradient(135deg, #6366f1, #8b5cf6);
+            --gradient-2: linear-gradient(135deg, #06b6d4, #10b981);
+            --gradient-3: linear-gradient(135deg, #f59e0b, #ef4444);
+            --shadow: 0 4px 24px rgba(0, 0, 0, 0.4);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            min-height: 100vh;
+            background-image: 
+                radial-gradient(ellipse at 20% 20%, rgba(99, 102, 241, 0.08) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 80%, rgba(6, 182, 212, 0.06) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 50%, rgba(139, 92, 246, 0.04) 0%, transparent 70%);
+        }
+
+        canvas#bgCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+            opacity: 0.4;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+            position: relative;
+            z-index: 1;
+        }
+
+        header {
+            text-align: center;
+            padding: 80px 0 60px;
+            position: relative;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 8px 20px;
+            border-radius: 50px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            margin-bottom: 24px;
+            background: rgba(99, 102, 241, 0.15);
+            color: var(--accent-1);
+            border: 1px solid rgba(99, 102, 241, 0.3);
+        }
+
+        h1 {
+            font-size: 3.2rem;
+            font-weight: 700;
+            letter-spacing: -1px;
+            margin-bottom: 16px;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto 40px;
+        }
+
+        .stats-bar {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            flex-wrap: wrap;
+            margin-top: 32px;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .stat-label {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 28px;
+            padding: 20px 0 80px;
+        }
+
+        .project-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 0;
+            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1.2);
+            cursor: pointer;
+            overflow: hidden;
+            position: relative;
+            box-shadow: var(--shadow);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .project-card:hover {
+            transform: translateY(-6px);
+            border-color: var(--accent-1);
+            box-shadow: 0 16px 48px rgba(99, 102, 241, 0.2);
+        }
+
+        .project-card.card-2:hover {
+            border-color: var(--accent-3);
+            box-shadow: 0 16px 48px rgba(6, 182, 212, 0.2);
+        }
+
+        .project-card.card-3:hover {
+            border-color: var(--warning);
+            box-shadow: 0 16px 48px rgba(245, 158, 11, 0.2);
+        }
+
+        .card-accent {
+            height: 6px;
+            width: 100%;
+        }
+
+        .accent-1 { background: var(--gradient-1); }
+        .accent-2 { background: var(--gradient-2); }
+        .accent-3 { background: var(--gradient-3); }
+
+        .card-content {
+            padding: 32px 28px;
+            flex: 1;
+        }
+
+        .card-icon {
+            width: 56px;
+            height: 56px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.6rem;
+            margin-bottom: 20px;
+        }
+
+        .icon-1 { background: rgba(99, 102, 241, 0.15); }
+        .icon-2 { background: rgba(6, 182, 212, 0.15); }
+        .icon-3 { background: rgba(245, 158, 11, 0.15); }
+
+        .card-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            letter-spacing: -0.5px;
+        }
+
+        .card-subtitle {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-bottom: 16px;
+        }
+
+        .card-description {
+            font-size: 0.95rem;
+            color: #c0c0d0;
+            line-height: 1.7;
+        }
+
+        .tech-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 16px;
+        }
+
+        .tech-tag {
+            padding: 5px 12px;
+            border-radius: 6px;
+            font-size: 0.78rem;
+            font-weight: 500;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+            transition: all 0.2s;
+        }
+
+        .project-card:hover .tech-tag {
+            border-color: rgba(255, 255, 255, 0.15);
+            color: #d0d0e0;
+        }
+
+        .card-stats {
+            display: flex;
+            gap: 16px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .card-stat {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        .card-stat-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--success);
+        }
+
+        .dot-warn { background: var(--warning); }
+        .dot-info { background: var(--accent-3); }
+
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.75);
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s;
+            backdrop-filter: blur(4px);
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .modal {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 750px;
+            width: 90%;
+            max-height: 85vh;
+            overflow-y: auto;
+            position: relative;
+            box-shadow: 0 24px 64px rgba(0, 0, 0, 0.6);
+        }
+
+        .modal-close {
+            position: sticky;
+            top: 0;
+            float: right;
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border);
+            color: #fff;
+            cursor: pointer;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+            z-index: 10;
+        }
+
+        .modal-close:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: #fff;
+        }
+
+        .modal h2 {
+            font-size: 1.8rem;
+            margin-bottom: 8px;
+            letter-spacing: -0.5px;
+        }
+
+        .modal .modal-subtitle {
+            color: var(--text-secondary);
+            margin-bottom: 24px;
+        }
+
+        .modal-section {
+            margin-bottom: 24px;
+        }
+
+        .modal-section h3 {
+            font-size: 1.1rem;
+            margin-bottom: 8px;
+            color: var(--accent-1);
+        }
+
+        .modal-section ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .modal-section li {
+            padding: 6px 0;
+            padding-left: 20px;
+            position: relative;
+            color: #c0c0d0;
+            font-size: 0.95rem;
+        }
+
+        .modal-section li::before {
+            content: '▸';
+            position: absolute;
+            left: 0;
+            color: var(--accent-1);
+            font-size: 0.8rem;
+        }
+
+        .code-block {
+            background: #0d0d15;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 16px 20px;
+            font-family: 'Cascadia Code', 'Fira Code', monospace;
+            font-size: 0.85rem;
+            overflow-x: auto;
+            color: #a0a0b8;
+            line-height: 1.8;
+            white-space: pre-wrap;
+            word-break: break-all;
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px 0;
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            border-top: 1px solid var(--border);
+            position: relative;
+            z-index: 1;
+        }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 2.2rem; }
+            .projects-grid { grid-template-columns: 1fr; }
+            .modal { padding: 24px; }
+            .stats-bar { gap: 20px; }
+        }
+    </style>
+</head>
+<body>
+    <canvas id="bgCanvas"></canvas>
+
+    <div class="container">
+        <header>
+            <div class="badge">🚀 ПОРТФОЛИО ПРОЕКТОВ</div>
+            <h1>AI & Automation<br>Решения</h1>
+            <p class="subtitle">Три полноценных продукта: от юридического AI-ассистента до семейного планировщика и промышленного парсера данных</p>
+            <div class="stats-bar">
+                <div class="stat-item">
+                    <div class="stat-number">3</div>
+                    <div class="stat-label">Продукта</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">8,461</div>
+                    <div class="stat-label">Строк данных</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">100%</div>
+                    <div class="stat-label">Offline-ready</div>
+                </div>
+            </div>
+        </header>
+
+        <div class="projects-grid">
+            <!-- Карточка 1: Юридический AI Ассистент -->
+            <div class="project-card" onclick="openModal('modal1')">
+                <div class="card-accent accent-1"></div>
+                <div class="card-content">
+                    <div class="card-icon icon-1">⚖️</div>
+                    <div class="card-title">Юридический AI Ассистент</div>
+                    <div class="card-subtitle">Десктопное приложение для юристов</div>
+                    <div class="card-description">
+                        Автоматический анализ юридических документов по трём направлениям: риски, орфография и соответствие законам. Локальная работа без интернета.
+                    </div>
+                    <div class="tech-tags">
+                        <span class="tech-tag">C# .NET 8.0</span>
+                        <span class="tech-tag">WPF</span>
+                        <span class="tech-tag">PDF/DOCX</span>
+                        <span class="tech-tag">AI Agents</span>
+                    </div>
+                    <div class="card-stats">
+                        <div class="card-stat"><span class="card-stat-dot"></span> 3 агента анализа</div>
+                        <div class="card-stat"><span class="card-stat-dot dot-warn"></span> Offline-first</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Карточка 2: Family Shopping List -->
+            <div class="project-card card-2" onclick="openModal('modal2')">
+                <div class="card-accent accent-2"></div>
+                <div class="card-content">
+                    <div class="card-icon icon-2">🛒</div>
+                    <div class="card-title">Family Shopping List</div>
+                    <div class="card-subtitle">Веб-приложение + Telegram-бот</div>
+                    <div class="card-description">
+                        Семейный помощник для покупок с realtime-синхронизацией. PWA-приложение, которое можно установить на телефон как нативное.
+                    </div>
+                    <div class="tech-tags">
+                        <span class="tech-tag">Next.js 14</span>
+                        <span class="tech-tag">Supabase</span>
+                        <span class="tech-tag">Telegram Bot</span>
+                        <span class="tech-tag">PWA</span>
+                    </div>
+                    <div class="card-stats">
+                        <div class="card-stat"><span class="card-stat-dot dot-info"></span> Realtime-синхронизация</div>
+                        <div class="card-stat"><span class="card-stat-dot"></span> 24/7 бот</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Карточка 3: Avito Parser -->
+            <div class="project-card card-3" onclick="openModal('modal3')">
+                <div class="card-accent accent-3"></div>
+                <div class="card-content">
+                    <div class="card-icon icon-3">📊</div>
+                    <div class="card-title">Avito Industrial Parser</div>
+                    <div class="card-subtitle">Парсер + верификатор данных</div>
+                    <div class="card-description">
+                        Извлечение и верификация 8,461 позиций товаров из магазина Avito. Автоматическое определение брендов, маркировок и состояний.
+                    </div>
+                    <div class="tech-tags">
+                        <span class="tech-tag">Python 3</span>
+                        <span class="tech-tag">Selenium</span>
+                        <span class="tech-tag">Pandas</span>
+                        <span class="tech-tag">Regex</span>
+                    </div>
+                    <div class="card-stats">
+                        <div class="card-stat"><span class="card-stat-dot"></span> 95% брендов определено</div>
+                        <div class="card-stat"><span class="card-stat-dot dot-warn"></span> 20 версий скрипта</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Модальные окна -->
+    <div class="modal-overlay" id="modal1">
+        <div class="modal">
+            <button class="modal-close" onclick="closeModal('modal1')">✕</button>
+            <h2>⚖️ Юридический AI Ассистент</h2>
+            <p class="modal-subtitle">Полноценное десктопное приложение для автоматического анализа документов</p>
+            
+            <div class="modal-section">
+                <h3>🎯 Что делает</h3>
+                <ul>
+                    <li>Анализ юридических рисков (двусмысленности, противоречия)</li>
+                    <li>Проверка орфографии и стиля (канцеляризмы, ошибки)</li>
+                    <li>Контроль соответствия законам (ссылки, обязательные пункты)</li>
+                </ul>
+            </div>
+
+            <div class="modal-section">
+                <h3>🛠️ Технологический стек</h3>
+                <div class="code-block">
+WPF + XAML          — Интерфейс пользователя
+C# .NET 8.0         — Логика приложения
+PdfPig              — Парсер PDF
+OpenXml             — Парсер DOCX
+Newtonsoft.Json     — База законов (sources.json)
+Inno Setup          — Инсталлятор (~55 MB)</div>
+            </div>
+
+            <div class="modal-section">
+                <h3>✅ Ключевые фичи</h3>
+                <ul>
+                    <li>Поддержка PDF, DOCX, TXT</li>
+                    <li>3 параллельных агента анализа</li>
+                    <li>Цветовая подсветка проблем в тексте</li>
+                    <li>Hyperlink'и на законы в браузере</li>
+                    <li>Инсталлятор с автоустановкой .NET</li>
+                    <li>Работает на Windows 7–11</li>
+                    <li>Полностью локально — документы не покидают компьютер</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="modal2">
+        <div class="modal">
+            <button class="modal-close" onclick="closeModal('modal2')">✕</button>
+            <h2>🛒 Family Shopping List</h2>
+            <p class="modal-subtitle">Семейный планировщик покупок с синхронизацией в реальном времени</p>
+            
+            <div class="modal-section">
+                <h3>🎯 Что делает</h3>
+                <ul>
+                    <li>Ведение общего списка продуктов для всей семьи</li>
+                    <li>Планирование покупок без лишних трат</li>
+                    <li>Realtime-синхронизация между всеми устройствами</li>
+                    <li>Telegram-бот для быстрого добавления продуктов</li>
+                    <li>Установка как PWA на главный экран телефона</li>
+                </ul>
+            </div>
+
+            <div class="modal-section">
+                <h3>🛠️ Технологический стек</h3>
+                <div class="code-block">
+Next.js 14          — Фронтенд (React + TypeScript)
+Tailwind CSS        — Стилизация
+Supabase            — База данных (PostgreSQL + Realtime)
+Python-Telegram-Bot — Telegram-бот
+Vercel + Railway    — Бесплатный деплой 24/7</div>
+            </div>
+
+            <div class="modal-section">
+                <h3>🔗 Ссылки</h3>
+                <ul>
+                    <li>Веб-приложение: shoppinglist-navy.vercel.app</li>
+                    <li>GitHub: github.com/Lordi-back/Shopping-List</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="modal3">
+        <div class="modal">
+            <button class="modal-close" onclick="closeModal('modal3')">✕</button>
+            <h2>📊 Avito Industrial Parser</h2>
+            <p class="modal-subtitle">Парсер + верификатор данных промышленного магазина Avito</p>
+            
+            <div class="modal-section">
+                <h3>🎯 Задача</h3>
+                <ul>
+                    <li>Парсинг 8,461 позиции из 1,500 объявлений Avito</li>
+                    <li>Извлечение 20 полей данных в Excel</li>
+                    <li>Верификация и дополнение пустых полей (1,610 проблемных строк)</li>
+                </ul>
+            </div>
+
+            <div class="modal-section">
+                <h3>🛠️ Ключевые технологии</h3>
+                <div class="code-block">
+Python 3            — Основной язык
+Selenium WebDriver  — Автоматизация Chrome
+Pandas              — Работа с Excel
+Regex (re)          — Извлечение маркировок, цен
+webdriver-manager   — Автоустановка драйвера
+JSON                — Сохранение прогресса</div>
+            </div>
+
+            <div class="modal-section">
+                <h3>🔧 Решённые проблемы</h3>
+                <ul>
+                    <li>Латиница в русском тексте (HOBЫЙ → НОВЫЙ) — нормализация символов</li>
+                    <li>Мультипозиции (Mitsubishi, Wika) — отдельные парсеры</li>
+                    <li>Защита от блокировки — задержки 3–8 сек, паузы каждые 30 товаров</li>
+                    <li>Сохранение прогресса — можно прервать и продолжить</li>
+                </ul>
+            </div>
+
+            <div class="modal-section">
+                <h3>📈 Результат</h3>
+                <ul>
+                    <li>95% брендов определено автоматически</li>
+                    <li>20 версий скрипта (от v1.0 до v20.1)</li>
+                    <li>40+ брендов в словаре</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <footer class="container">
+        <p>© 2024 Портфолио проектов | AI, Automation & Full-Stack Development</p>
+    </footer>
+
+    <script>
+        // Анимированный фон
+        const canvas = document.getElementById('bgCanvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        class Particle {
+            constructor() {
+                this.reset();
+            }
+            reset() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 1.5 + 0.5;
+                this.speedX = (Math.random() - 0.5) * 0.3;
+                this.speedY = (Math.random() - 0.5) * 0.3;
+                this.opacity = Math.random() * 0.5 + 0.1;
+            }
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                if (this.x < 0 || this.x > canvas.width || this.y < 0 || this.y > canvas.height) {
+                    this.reset();
+                }
+            }
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(139, 92, 246, ${this.opacity})`;
+                ctx.fill();
+            }
+        }
+
+        for (let i = 0; i < 80; i++) {
+            particles.push(new Particle());
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => {
+                p.update();
+                p.draw();
+            });
+            // Соединяем близкие частицы
+            for (let i = 0; i < particles.length; i++) {
+                for (let j = i + 1; j < particles.length; j++) {
+                    const dx = particles[i].x - particles[j].x;
+                    const dy = particles[i].y - particles[j].y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+                    if (dist < 120) {
+                        ctx.beginPath();
+                        ctx.moveTo(particles[i].x, particles[i].y);
+                        ctx.lineTo(particles[j].x, particles[j].y);
+                        ctx.strokeStyle = `rgba(139, 92, 246, ${0.06 * (1 - dist / 120)})`;
+                        ctx.lineWidth = 0.5;
+                        ctx.stroke();
+                    }
+                }
+            }
+            requestAnimationFrame(animate);
+        }
+        animate();
+
+        // Модальные окна
+        function openModal(id) {
+            document.getElementById(id).classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal(id) {
+            document.getElementById(id).classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        // Закрытие по клику на оверлей
+        document.querySelectorAll('.modal-overlay').forEach(overlay => {
+            overlay.addEventListener('click', function(e) {
+                if (e.target === this) {
+                    this.classList.remove('active');
+                    document.body.style.overflow = '';
+                }
+            });
+        });
+
+        // Закрытие по Escape
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                document.querySelectorAll('.modal-overlay.active').forEach(overlay => {
+                    overlay.classList.remove('active');
+                });
+                document.body.style.overflow = '';
+            }
+        });
+    </script>
+</body>
+</html>
