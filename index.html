@@ -3,970 +3,714 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Портфолио проектов | AI & Automation</title>
+    <title>AI & Automation — Решения для бизнеса</title>
     <style>
         :root {
             --bg: #0a0a0f;
-            --surface: #13131a;
-            --surface-hover: #1a1a24;
-            --border: #2a2a3a;
-            --text: #e0e0e8;
-            --text-secondary: #9a9ab0;
-            --accent-1: #6366f1;
-            --accent-2: #8b5cf6;
-            --accent-3: #06b6d4;
-            --success: #10b981;
-            --warning: #f59e0b;
-            --danger: #ef4444;
-            --gradient-1: linear-gradient(135deg, #6366f1, #8b5cf6);
-            --gradient-2: linear-gradient(135deg, #06b6d4, #10b981);
-            --gradient-3: linear-gradient(135deg, #f59e0b, #ef4444);
-            --shadow: 0 4px 24px rgba(0, 0, 0, 0.4);
+            --surface: #111118;
+            --border: #1e1e2a;
+            --text: #e8e8f0;
+            --text-secondary: #9898b0;
+            --accent: #6366f1;
+            --accent-glow: rgba(99, 102, 241, 0.3);
+            --green: #10b981;
+            --green-glow: rgba(16, 185, 129, 0.3);
+            --amber: #f59e0b;
+            --amber-glow: rgba(245, 158, 11, 0.3);
+            --radius: 16px;
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
             font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
             background: var(--bg);
             color: var(--text);
             line-height: 1.6;
-            min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
             background-image: 
-                radial-gradient(ellipse at 20% 20%, rgba(99, 102, 241, 0.08) 0%, transparent 50%),
-                radial-gradient(ellipse at 80% 80%, rgba(6, 182, 212, 0.06) 0%, transparent 50%),
-                radial-gradient(ellipse at 50% 50%, rgba(139, 92, 246, 0.04) 0%, transparent 70%);
+                radial-gradient(ellipse at 10% 20%, rgba(99, 102, 241, 0.06) 0%, transparent 50%),
+                radial-gradient(ellipse at 90% 80%, rgba(16, 185, 129, 0.04) 0%, transparent 50%);
         }
 
-        canvas#bgCanvas {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 0;
-            pointer-events: none;
-            opacity: 0.4;
-        }
+        .page { display: none; }
+        .page.active { display: block; }
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 24px;
-            position: relative;
-            z-index: 1;
-        }
+        .container { max-width: 960px; margin: 0 auto; padding: 0 24px; }
 
-        /* ========== ГЛАВНАЯ СТРАНИЦА ========== */
-        .page {
-            display: none;
-        }
-        .page.active {
-            display: block;
-        }
-
-        header {
+        /* ========== ГЛАВНАЯ ========== */
+        .hero-main {
             text-align: center;
-            padding: 80px 0 60px;
-            position: relative;
+            padding: 100px 0 60px;
         }
-
-        .badge {
+        .hero-badge {
             display: inline-block;
             padding: 8px 20px;
             border-radius: 50px;
-            font-size: 0.875rem;
-            font-weight: 500;
+            font-size: 0.85rem;
+            font-weight: 600;
             letter-spacing: 0.5px;
-            margin-bottom: 24px;
-            background: rgba(99, 102, 241, 0.15);
-            color: var(--accent-1);
-            border: 1px solid rgba(99, 102, 241, 0.3);
+            background: rgba(99, 102, 241, 0.12);
+            color: var(--accent);
+            border: 1px solid rgba(99, 102, 241, 0.25);
+            margin-bottom: 28px;
         }
-
-        h1 {
+        .hero-main h1 {
             font-size: 3.2rem;
-            font-weight: 700;
-            letter-spacing: -1px;
-            margin-bottom: 16px;
-            background: var(--gradient-1);
+            font-weight: 800;
+            letter-spacing: -1.5px;
+            line-height: 1.15;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #e8e8f0 0%, #6366f1 50%, #8b5cf6 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
-
-        .subtitle {
+        .hero-main .sub {
             font-size: 1.2rem;
             color: var(--text-secondary);
-            max-width: 600px;
-            margin: 0 auto 40px;
+            max-width: 550px;
+            margin: 0 auto 50px;
         }
 
-        .stats-bar {
-            display: flex;
-            justify-content: center;
-            gap: 40px;
-            flex-wrap: wrap;
-            margin-top: 32px;
-        }
-
-        .stat-item {
-            text-align: center;
-        }
-
-        .stat-number {
-            font-size: 2.5rem;
-            font-weight: 700;
-            background: var(--gradient-1);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .stat-label {
-            font-size: 0.85rem;
-            color: var(--text-secondary);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .projects-grid {
+        .products-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 28px;
-            padding: 20px 0 80px;
-        }
-
-        .project-card {
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: 20px;
-            padding: 0;
-            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1.2);
-            cursor: pointer;
-            overflow: hidden;
-            position: relative;
-            box-shadow: var(--shadow);
-            display: flex;
-            flex-direction: column;
-            text-decoration: none;
-            color: inherit;
-        }
-
-        .project-card:hover {
-            transform: translateY(-6px);
-            border-color: var(--accent-1);
-            box-shadow: 0 16px 48px rgba(99, 102, 241, 0.2);
-        }
-
-        .project-card.card-2:hover {
-            border-color: var(--accent-3);
-            box-shadow: 0 16px 48px rgba(6, 182, 212, 0.2);
-        }
-
-        .project-card.card-3:hover {
-            border-color: var(--warning);
-            box-shadow: 0 16px 48px rgba(245, 158, 11, 0.2);
-        }
-
-        .card-accent {
-            height: 6px;
-            width: 100%;
-        }
-
-        .accent-1 { background: var(--gradient-1); }
-        .accent-2 { background: var(--gradient-2); }
-        .accent-3 { background: var(--gradient-3); }
-
-        .card-content {
-            padding: 32px 28px;
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .card-icon {
-            width: 56px;
-            height: 56px;
-            border-radius: 16px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.6rem;
-            margin-bottom: 20px;
-        }
-
-        .icon-1 { background: rgba(99, 102, 241, 0.15); }
-        .icon-2 { background: rgba(6, 182, 212, 0.15); }
-        .icon-3 { background: rgba(245, 158, 11, 0.15); }
-
-        .card-title {
-            font-size: 1.4rem;
-            font-weight: 700;
-            margin-bottom: 8px;
-            letter-spacing: -0.5px;
-        }
-
-        .card-subtitle {
-            font-size: 0.9rem;
-            color: var(--text-secondary);
-            margin-bottom: 16px;
-        }
-
-        .card-description {
-            font-size: 0.95rem;
-            color: #c0c0d0;
-            line-height: 1.7;
-            flex: 1;
-        }
-
-        .tech-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-            margin-top: 16px;
-        }
-
-        .tech-tag {
-            padding: 5px 12px;
-            border-radius: 6px;
-            font-size: 0.78rem;
-            font-weight: 500;
-            background: rgba(255, 255, 255, 0.04);
-            border: 1px solid var(--border);
-            color: var(--text-secondary);
-            transition: all 0.2s;
-        }
-
-        .project-card:hover .tech-tag {
-            border-color: rgba(255, 255, 255, 0.15);
-            color: #d0d0e0;
-        }
-
-        .card-stats {
-            display: flex;
-            gap: 16px;
-            margin-top: 20px;
-            flex-wrap: wrap;
-        }
-
-        .card-stat {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            font-size: 0.8rem;
-            color: var(--text-secondary);
-        }
-
-        .card-stat-dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background: var(--success);
-        }
-
-        .dot-warn { background: var(--warning); }
-        .dot-info { background: var(--accent-3); }
-
-        .card-arrow {
-            margin-top: 16px;
-            font-size: 0.85rem;
-            color: var(--accent-1);
-            font-weight: 500;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            opacity: 0;
-            transform: translateX(-10px);
-            transition: all 0.3s;
-        }
-
-        .project-card:hover .card-arrow {
-            opacity: 1;
-            transform: translateX(0);
-        }
-
-        .card-2 .card-arrow { color: var(--accent-3); }
-        .card-3 .card-arrow { color: var(--warning); }
-
-        /* ========== ДЕТАЛЬНЫЕ СТРАНИЦЫ ========== */
-        .detail-page {
-            padding-top: 40px;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
             padding-bottom: 80px;
         }
 
-        .back-button {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            padding: 10px 20px;
-            border-radius: 10px;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid var(--border);
-            color: var(--text);
-            cursor: pointer;
-            font-size: 0.95rem;
-            text-decoration: none;
-            transition: all 0.2s;
-            margin-bottom: 32px;
-        }
-
-        .back-button:hover {
-            background: rgba(255, 255, 255, 0.1);
-            border-color: rgba(255, 255, 255, 0.3);
-        }
-
-        .detail-header {
-            margin-bottom: 40px;
-        }
-
-        .detail-header .card-icon {
-            margin-bottom: 16px;
-        }
-
-        .detail-header h2 {
-            font-size: 2.4rem;
-            font-weight: 700;
-            letter-spacing: -1px;
-            margin-bottom: 8px;
-        }
-
-        .detail-header .detail-subtitle {
-            font-size: 1.1rem;
-            color: var(--text-secondary);
-        }
-
-        .detail-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 28px;
-        }
-
-        .detail-card {
+        .product-card {
             background: var(--surface);
             border: 1px solid var(--border);
-            border-radius: 16px;
-            padding: 28px;
-        }
-
-        .detail-card.full-width {
-            grid-column: 1 / -1;
-        }
-
-        .detail-card h3 {
-            font-size: 1.15rem;
-            font-weight: 600;
-            margin-bottom: 16px;
-            color: var(--accent-1);
-        }
-
-        .detail-card.card-accent-alt h3 {
-            color: var(--accent-3);
-        }
-
-        .detail-card.card-accent-warn h3 {
-            color: var(--warning);
-        }
-
-        .detail-card ul {
-            list-style: none;
-            padding: 0;
-        }
-
-        .detail-card li {
-            padding: 7px 0;
-            padding-left: 20px;
+            border-radius: 20px;
+            padding: 36px 28px;
+            cursor: pointer;
+            transition: all 0.35s ease;
+            text-decoration: none;
+            color: inherit;
+            display: flex;
+            flex-direction: column;
             position: relative;
-            color: #c0c0d0;
+            overflow: hidden;
+        }
+        .product-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+        }
+        .product-card.card-1:hover { border-color: var(--accent); box-shadow: 0 20px 50px var(--accent-glow); }
+        .product-card.card-2:hover { border-color: var(--green); box-shadow: 0 20px 50px var(--green-glow); }
+        .product-card.card-3:hover { border-color: var(--amber); box-shadow: 0 20px 50px var(--amber-glow); }
+
+        .product-icon {
+            width: 52px; height: 52px;
+            border-radius: 14px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+        }
+        .icon-1 { background: rgba(99, 102, 241, 0.15); }
+        .icon-2 { background: rgba(16, 185, 129, 0.15); }
+        .icon-3 { background: rgba(245, 158, 11, 0.15); }
+
+        .product-card h2 {
+            font-size: 1.35rem;
+            font-weight: 700;
+            margin-bottom: 6px;
+            letter-spacing: -0.5px;
+        }
+        .product-card .tagline {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-bottom: 14px;
+        }
+        .product-card .desc {
             font-size: 0.95rem;
-            line-height: 1.6;
+            color: #b0b0c0;
+            line-height: 1.65;
+            flex: 1;
+            margin-bottom: 20px;
         }
 
-        .detail-card li::before {
-            content: '▸';
-            position: absolute;
-            left: 0;
-            color: var(--accent-1);
-            font-size: 0.8rem;
-        }
-
-        .detail-card.card-accent-alt li::before {
-            color: var(--accent-3);
-        }
-
-        .detail-card.card-accent-warn li::before {
-            color: var(--warning);
-        }
-
-        .code-block {
-            background: #0d0d15;
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 16px 20px;
-            font-family: 'Cascadia Code', 'Fira Code', 'Courier New', monospace;
-            font-size: 0.85rem;
-            overflow-x: auto;
-            color: #a0a0b8;
-            line-height: 1.8;
-            white-space: pre-wrap;
-            word-break: break-all;
-        }
-
-        .detail-tags {
+        .benefit-chips {
             display: flex;
             flex-wrap: wrap;
-            gap: 8px;
-            margin-top: 8px;
+            gap: 6px;
+            margin-bottom: 20px;
+        }
+        .chip {
+            padding: 5px 11px;
+            border-radius: 6px;
+            font-size: 0.76rem;
+            font-weight: 600;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.08);
+            color: #a0a0b8;
         }
 
-        .detail-tag {
-            padding: 6px 14px;
-            border-radius: 8px;
-            font-size: 0.82rem;
-            font-weight: 500;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid var(--border);
-            color: #c0c0d0;
+        .price-row {
+            display: flex;
+            align-items: baseline;
+            gap: 10px;
+            margin-top: auto;
         }
-
-        .highlight-box {
-            background: rgba(99, 102, 241, 0.08);
-            border: 1px solid rgba(99, 102, 241, 0.2);
-            border-radius: 12px;
-            padding: 16px 20px;
-            margin-top: 12px;
+        .price {
+            font-size: 1.6rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+        }
+        .price-period {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+        .cta-arrow {
+            margin-left: auto;
             font-size: 0.9rem;
-            color: #b0b0c8;
+            font-weight: 600;
+            opacity: 0;
+            transform: translateX(-8px);
+            transition: all 0.3s;
         }
+        .product-card:hover .cta-arrow { opacity: 1; transform: translateX(0); }
+        .card-1 .cta-arrow { color: var(--accent); }
+        .card-2 .cta-arrow { color: var(--green); }
+        .card-3 .cta-arrow { color: var(--amber); }
 
         footer {
             text-align: center;
-            padding: 40px 0;
+            padding: 32px 0;
             color: var(--text-secondary);
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             border-top: 1px solid var(--border);
-            position: relative;
-            z-index: 1;
+        }
+
+        /* ========== ДЕТАЛЬНЫЕ СТРАНИЦЫ ========== */
+        .detail-page { padding: 40px 0 80px; }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            margin-bottom: 40px;
+            transition: color 0.2s;
+        }
+        .back-link:hover { color: #fff; }
+
+        /* Hero секция */
+        .detail-hero {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: center;
+            margin-bottom: 60px;
+        }
+        .detail-hero .left h2 {
+            font-size: 2.6rem;
+            font-weight: 800;
+            letter-spacing: -1px;
+            line-height: 1.2;
+            margin-bottom: 16px;
+        }
+        .detail-hero .left .subtitle {
+            font-size: 1.15rem;
+            color: var(--text-secondary);
+            margin-bottom: 24px;
+        }
+        .detail-hero .left .big-price {
+            font-size: 3rem;
+            font-weight: 800;
+            letter-spacing: -1px;
+            margin-bottom: 4px;
+        }
+        .detail-hero .left .big-price-period {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            margin-bottom: 24px;
+        }
+        .btn-primary {
+            display: inline-block;
+            padding: 14px 32px;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 1rem;
+            text-decoration: none;
+            cursor: pointer;
+            border: none;
+            color: #fff;
+            transition: all 0.3s;
+            letter-spacing: 0.3px;
+        }
+        .btn-accent { background: var(--accent); }
+        .btn-accent:hover { background: #5558e6; box-shadow: 0 8px 30px var(--accent-glow); }
+        .btn-green { background: var(--green); }
+        .btn-green:hover { background: #0ea575; box-shadow: 0 8px 30px var(--green-glow); }
+        .btn-amber { background: var(--amber); color: #1a1a1a; }
+        .btn-amber:hover { background: #e69500; box-shadow: 0 8px 30px var(--amber-glow); }
+
+        .detail-hero .right {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 32px;
+        }
+        .detail-hero .right h4 {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-secondary);
+            margin-bottom: 16px;
+        }
+        .detail-hero .right ul {
+            list-style: none;
+        }
+        .detail-hero .right li {
+            padding: 8px 0;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            color: #c0c0d0;
+        }
+        .detail-hero .right li .check {
+            color: var(--green);
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        /* Блоки "боль" и "решение" */
+        .section-title {
+            font-size: 1.6rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            margin-bottom: 24px;
+            text-align: center;
+        }
+
+        .pain-solution-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            margin-bottom: 60px;
+        }
+        .ps-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 28px;
+        }
+        .ps-card h4 {
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .ps-card.pain h4 { color: #ef4444; }
+        .ps-card.solution h4 { color: var(--green); }
+        .ps-card ul { list-style: none; }
+        .ps-card li {
+            padding: 6px 0;
+            font-size: 0.92rem;
+            color: #b0b0c0;
+            line-height: 1.55;
+        }
+        .ps-card li::before {
+            content: '• ';
+            font-weight: 700;
+        }
+        .ps-card.pain li::before { color: #ef4444; }
+        .ps-card.solution li::before { color: var(--green); }
+
+        /* Что внутри */
+        .inside-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            margin-bottom: 60px;
+        }
+        .inside-item {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 24px 20px;
+            text-align: center;
+        }
+        .inside-item .emoji { font-size: 2rem; margin-bottom: 10px; }
+        .inside-item h4 { font-size: 0.95rem; font-weight: 700; margin-bottom: 6px; }
+        .inside-item p { font-size: 0.82rem; color: var(--text-secondary); line-height: 1.5; }
+
+        /* Отзывы / кейсы */
+        .testimonial {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 28px 32px;
+            margin-bottom: 16px;
+        }
+        .testimonial .quote {
+            font-size: 1rem;
+            font-style: italic;
+            color: #d0d0e0;
+            margin-bottom: 12px;
+            line-height: 1.6;
+        }
+        .testimonial .author {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            font-weight: 600;
+        }
+
+        /* CTA блок */
+        .cta-block {
+            text-align: center;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 48px 32px;
+            margin-top: 40px;
+        }
+        .cta-block h3 {
+            font-size: 1.8rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            margin-bottom: 12px;
+        }
+        .cta-block p {
+            color: var(--text-secondary);
+            margin-bottom: 24px;
+            font-size: 1.05rem;
+        }
+        .guarantee {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-top: 16px;
         }
 
         @media (max-width: 768px) {
-            h1 { font-size: 2.2rem; }
-            .detail-header h2 { font-size: 1.8rem; }
-            .projects-grid { grid-template-columns: 1fr; }
-            .detail-grid { grid-template-columns: 1fr; }
-            .detail-card.full-width { grid-column: 1; }
-            .stats-bar { gap: 20px; }
+            .hero-main h1 { font-size: 2.2rem; }
+            .detail-hero { grid-template-columns: 1fr; }
+            .pain-solution-grid { grid-template-columns: 1fr; }
+            .detail-hero .left h2 { font-size: 2rem; }
+            .detail-hero .left .big-price { font-size: 2.4rem; }
         }
     </style>
 </head>
 <body>
-    <canvas id="bgCanvas"></canvas>
 
-    <!-- ==================== ГЛАВНАЯ СТРАНИЦА ==================== -->
-    <div class="page active" id="page-home">
-        <div class="container">
-            <header>
-                <div class="badge">🚀 ПОРТФОЛИО ПРОЕКТОВ</div>
-                <h1>AI & Automation<br>Решения</h1>
-                <p class="subtitle">Три полноценных продукта: от юридического AI-ассистента до семейного планировщика и промышленного парсера данных</p>
-                <div class="stats-bar">
-                    <div class="stat-item">
-                        <div class="stat-number">3</div>
-                        <div class="stat-label">Продукта</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-number">100%</div>
-                        <div class="stat-label">Offline-ready</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-number">24/7</div>
-                        <div class="stat-label">Доступность</div>
-                    </div>
+<!-- ==================== ГЛАВНАЯ ==================== -->
+<div class="page active" id="page-home">
+    <div class="container">
+        <div class="hero-main">
+            <div class="hero-badge">⚡ ГОТОВЫЕ РЕШЕНИЯ ДЛЯ БИЗНЕСА</div>
+            <h1>Умные инструменты,<br>которые окупаются сразу</h1>
+            <p class="sub">Три продукта, которые экономят часы рутины, исключают ошибки и приносят результат с первого дня</p>
+        </div>
+
+        <div class="products-grid">
+            <!-- Карточка 1 -->
+            <a href="#legal" class="product-card card-1" onclick="goTo('page-legal')">
+                <div class="product-icon icon-1">⚖️</div>
+                <h2>Юридический AI-ассистент</h2>
+                <p class="tagline">Для юристов и юридических отделов</p>
+                <p class="desc">Программа сама находит риски, ошибки и несоответствия в договорах за минуты вместо часов</p>
+                <div class="benefit-chips">
+                    <span class="chip">Экономия 5+ часов в неделю</span>
+                    <span class="chip">0 пропущенных рисков</span>
                 </div>
-            </header>
+                <div class="price-row">
+                    <span class="price">от 1 900 ₽</span>
+                    <span class="price-period">/мес</span>
+                    <span class="cta-arrow">Подробнее →</span>
+                </div>
+            </a>
 
-            <div class="projects-grid">
-                <!-- Карточка 1: Юридический AI Ассистент -->
-                <a href="#legal-ai" class="project-card" onclick="navigateTo('page-legal')">
-                    <div class="card-accent accent-1"></div>
-                    <div class="card-content">
-                        <div class="card-icon icon-1">⚖️</div>
-                        <div class="card-title">Юридический AI Ассистент</div>
-                        <div class="card-subtitle">Десктопное приложение для юристов</div>
-                        <div class="card-description">
-                            Автоматический анализ юридических документов по трём направлениям: риски, орфография и соответствие законам. Локальная работа без интернета.
-                        </div>
-                        <div class="tech-tags">
-                            <span class="tech-tag">C# .NET 8.0</span>
-                            <span class="tech-tag">WPF</span>
-                            <span class="tech-tag">PDF/DOCX</span>
-                            <span class="tech-tag">AI Agents</span>
-                        </div>
-                        <div class="card-stats">
-                            <div class="card-stat"><span class="card-stat-dot"></span> 3 агента анализа</div>
-                            <div class="card-stat"><span class="card-stat-dot dot-warn"></span> Offline-first</div>
-                        </div>
-                        <div class="card-arrow">Подробнее →</div>
-                    </div>
-                </a>
+            <!-- Карточка 2 -->
+            <a href="#family" class="product-card card-2" onclick="goTo('page-family')">
+                <div class="product-icon icon-2">🛒</div>
+                <h2>Семейный планировщик покупок</h2>
+                <p class="tagline">Для всей семьи — телефон, планшет, компьютер</p>
+                <p class="desc">Один список на всех. Больше никаких «зачем купили третий пакет молока» и забытого хлеба</p>
+                <div class="benefit-chips">
+                    <span class="chip">Синхронизация мгновенно</span>
+                    <span class="chip">Telegram-бот 24/7</span>
+                </div>
+                <div class="price-row">
+                    <span class="price">от 290 ₽</span>
+                    <span class="price-period">/мес</span>
+                    <span class="cta-arrow">Подробнее →</span>
+                </div>
+            </a>
 
-                <!-- Карточка 2: Family Shopping List -->
-                <a href="#family-shopping" class="project-card card-2" onclick="navigateTo('page-family')">
-                    <div class="card-accent accent-2"></div>
-                    <div class="card-content">
-                        <div class="card-icon icon-2">🛒</div>
-                        <div class="card-title">Family Shopping List</div>
-                        <div class="card-subtitle">Веб-приложение + Telegram-бот</div>
-                        <div class="card-description">
-                            Семейный помощник для покупок с realtime-синхронизацией. PWA-приложение, которое можно установить на телефон как нативное.
-                        </div>
-                        <div class="tech-tags">
-                            <span class="tech-tag">Next.js 14</span>
-                            <span class="tech-tag">Supabase</span>
-                            <span class="tech-tag">Telegram Bot</span>
-                            <span class="tech-tag">PWA</span>
-                        </div>
-                        <div class="card-stats">
-                            <div class="card-stat"><span class="card-stat-dot dot-info"></span> Realtime-синхронизация</div>
-                            <div class="card-stat"><span class="card-stat-dot"></span> 24/7 бот</div>
-                        </div>
-                        <div class="card-arrow">Подробнее →</div>
-                    </div>
-                </a>
+            <!-- Карточка 3 -->
+            <a href="#parser" class="product-card card-3" onclick="goTo('page-parser')">
+                <div class="product-icon icon-3">📊</div>
+                <h2>Извлечение данных из каталогов</h2>
+                <p class="tagline">Для отделов закупок и аналитиков</p>
+                <p class="desc">Автоматический сбор и проверка данных о товарах. Заполняем пропуски, находим ошибки, выгружаем в Excel</p>
+                <div class="benefit-chips">
+                    <span class="chip">95% точность</span>
+                    <span class="chip">Готово за 3 часа</span>
+                </div>
+                <div class="price-row">
+                    <span class="price">от 4 900 ₽</span>
+                    <span class="price-period">/проект</span>
+                    <span class="cta-arrow">Подробнее →</span>
+                </div>
+            </a>
+        </div>
+    </div>
+    <footer>© 2024 AI & Automation Solutions</footer>
+</div>
 
-                <!-- Карточка 3: Industrial Parser -->
-                <a href="#industrial-parser" class="project-card card-3" onclick="navigateTo('page-parser')">
-                    <div class="card-accent accent-3"></div>
-                    <div class="card-content">
-                        <div class="card-icon icon-3">📊</div>
-                        <div class="card-title">Industrial Data Parser</div>
-                        <div class="card-subtitle">Парсер + верификатор данных</div>
-                        <div class="card-description">
-                            Извлечение и верификация данных из промышленного каталога. Автоматическое определение брендов, маркировок и состояний товаров.
-                        </div>
-                        <div class="tech-tags">
-                            <span class="tech-tag">Python 3</span>
-                            <span class="tech-tag">Selenium</span>
-                            <span class="tech-tag">Pandas</span>
-                            <span class="tech-tag">Regex</span>
-                        </div>
-                        <div class="card-stats">
-                            <div class="card-stat"><span class="card-stat-dot"></span> 95% брендов определено</div>
-                            <div class="card-stat"><span class="card-stat-dot dot-warn"></span> 20+ итераций</div>
-                        </div>
-                        <div class="card-arrow">Подробнее →</div>
-                    </div>
-                </a>
+<!-- ==================== СТРАНИЦА: ЮРИДИЧЕСКИЙ AI ==================== -->
+<div class="page" id="page-legal">
+    <div class="container detail-page">
+        <a href="#" class="back-link" onclick="goTo('page-home')">← На главную</a>
+
+        <div class="detail-hero">
+            <div class="left">
+                <h2>Проверка договора за 2 минуты вместо 2 часов</h2>
+                <p class="subtitle">AI-ассистент, который находит юридические риски, ошибки и несоответствия законам — без интернета, прямо на вашем компьютере</p>
+                <div class="big-price">1 900 ₽</div>
+                <div class="big-price-period">в месяц • лицензия на 1 рабочее место</div>
+                <a href="#" class="btn-primary btn-accent">Попробовать бесплатно 7 дней</a>
+            </div>
+            <div class="right">
+                <h4>Что вы получаете</h4>
+                <ul>
+                    <li><span class="check">✓</span> Автопроверка на юридические риски</li>
+                    <li><span class="check">✓</span> Поиск канцеляризмов и ошибок</li>
+                    <li><span class="check">✓</span> Контроль обязательных пунктов договора</li>
+                    <li><span class="check">✓</span> Ссылки на актуальные законы</li>
+                    <li><span class="check">✓</span> Подсветка проблем прямо в тексте</li>
+                    <li><span class="check">✓</span> Работает без интернета</li>
+                </ul>
             </div>
         </div>
-        <footer class="container">
-            <p>© 2024 Портфолио проектов | AI, Automation & Full-Stack Development</p>
-        </footer>
-    </div>
 
-    <!-- ==================== СТРАНИЦА: ЮРИДИЧЕСКИЙ AI АССИСТЕНТ ==================== -->
-    <div class="page" id="page-legal">
-        <div class="container detail-page">
-            <a href="#" class="back-button" onclick="navigateTo('page-home')">← Назад к проектам</a>
-            
-            <div class="detail-header">
-                <div class="card-icon icon-1">⚖️</div>
-                <h2>Юридический AI Ассистент</h2>
-                <p class="detail-subtitle">Полноценное десктопное приложение для автоматического анализа юридических документов</p>
+        <h3 class="section-title">Что болит → Как решаем</h3>
+        <div class="pain-solution-grid">
+            <div class="ps-card pain">
+                <h4>😣 До</h4>
+                <ul>
+                    <li>Юрист тратит 2–3 часа на вычитку одного договора</li>
+                    <li>Пропускают двусмысленные формулировки</li>
+                    <li>Забывают проверить обязательные пункты</li>
+                    <li>«В разумный срок» — и потом суд</li>
+                    <li>Документы уходят третьим лицам при онлайн-проверке</li>
+                </ul>
             </div>
+            <div class="ps-card solution">
+                <h4>✅ После</h4>
+                <ul>
+                    <li>Загрузили договор → через 2 минуты полный отчёт</li>
+                    <li>Подсветка всех рискованных фраз красным</li>
+                    <li>Автоматический чек-лист: цена, срок, предмет, подписи</li>
+                    <li>Конкретная рекомендация: «замените на точную дату»</li>
+                    <li>Всё на вашем компьютере, документы не покидают офис</li>
+                </ul>
+            </div>
+        </div>
 
-            <div class="detail-grid">
-                <div class="detail-card">
-                    <h3>🎯 Что делает</h3>
-                    <ul>
-                        <li>Анализ юридических рисков (двусмысленности, противоречия)</li>
-                        <li>Проверка орфографии и стиля (канцеляризмы, ошибки)</li>
-                        <li>Контроль соответствия законам (ссылки, обязательные пункты)</li>
-                        <li>Подсветка проблем прямо в тексте документа</li>
-                    </ul>
-                </div>
+        <h3 class="section-title">Что внутри</h3>
+        <div class="inside-grid">
+            <div class="inside-item"><div class="emoji">🔍</div><h4>Анализ рисков</h4><p>Находит двусмысленности и противоречия</p></div>
+            <div class="inside-item"><div class="emoji">📝</div><h4>Орфография и стиль</h4><p>Канцеляризмы, повторы, опечатки</p></div>
+            <div class="inside-item"><div class="emoji">📋</div><h4>Соответствие законам</h4><p>Проверяет ссылки и обязательные пункты</p></div>
+            <div class="inside-item"><div class="emoji">🎨</div><h4>Цветовая подсветка</h4><p>Красный — критично, жёлтый — внимание, зелёный — ок</p></div>
+        </div>
 
-                <div class="detail-card">
-                    <h3>🛠️ Технологический стек</h3>
-                    <div class="code-block">
-WPF + XAML          — Интерфейс пользователя
-C# .NET 8.0         — Логика приложения
-PdfPig              — Парсер PDF
-OpenXml             — Парсер DOCX
-Newtonsoft.Json     — База законов (sources.json)
-Inno Setup          — Инсталлятор</div>
-                </div>
+        <div class="testimonial">
+            <div class="quote">«Раньше я проверял один договор 40 минут. Теперь закидываю в программу — и через минуту вижу всё, что нужно поправить. За месяц ни одной возвращённой претензии.»</div>
+            <div class="author">— Алексей, корпоративный юрист, 8 лет практики</div>
+        </div>
 
-                <div class="detail-card full-width">
-                    <h3>🏗️ Архитектура приложения</h3>
-                    <div class="code-block">
-┌─────────────────────────────────────────┐
-│              WPF Application            │
-├─────────────────────────────────────────┤
-│  UI Layer                               │
-│  • MainWindow.xaml — интерфейс          │
-│  • RichTextBox — текст с подсветкой     │
-│  • ItemsControl — список проблем        │
-├─────────────────────────────────────────┤
-│  Business Logic Layer                   │
-│  • UnifiedAnalyzer — координация        │
-│  • LawChecker — проверка законов        │
-│  • GrammarChecker — орфография          │
-│  • RiskChecker — риски                  │
-├─────────────────────────────────────────┤
-│  Data Layer                             │
-│  • sources.json — база законов          │
-│  • DocumentParser — PDF/DOCX/TXT        │
-└─────────────────────────────────────────┘</div>
-                </div>
+        <div class="cta-block">
+            <h3>Начните проверять договоры быстрее уже сегодня</h3>
+            <p>7 дней бесплатно • Без ограничений • Без интернета</p>
+            <a href="#" class="btn-primary btn-accent">Попробовать бесплатно</a>
+            <p class="guarantee">🔒 Документы остаются на вашем компьютере</p>
+        </div>
+    </div>
+    <footer>© 2024 AI & Automation Solutions</footer>
+</div>
 
-                <div class="detail-card">
-                    <h3>✅ Ключевые возможности</h3>
-                    <ul>
-                        <li>Поддержка PDF, DOCX, TXT</li>
-                        <li>3 параллельных агента анализа</li>
-                        <li>Цветовая подсветка: красный / жёлтый / зелёный</li>
-                        <li>Hyperlink'и на законы в браузере</li>
-                        <li>Инсталлятор ~55 MB с автоустановкой .NET</li>
-                    </ul>
-                </div>
+<!-- ==================== СТРАНИЦА: FAMILY SHOPPING ==================== -->
+<div class="page" id="page-family">
+    <div class="container detail-page">
+        <a href="#" class="back-link" onclick="goTo('page-home')">← На главную</a>
 
-                <div class="detail-card">
-                    <h3>🔒 Безопасность</h3>
-                    <ul>
-                        <li>Работает полностью локально</li>
-                        <li>Документы не покидают компьютер</li>
-                        <li>Не требует подключения к интернету</li>
-                        <li>Поддержка Windows 7–11</li>
-                    </ul>
-                    <div class="highlight-box">
-                        💡 Идеально для юридических фирм, работающих с конфиденциальными документами
-                    </div>
-                </div>
+        <div class="detail-hero">
+            <div class="left">
+                <h2>Один список покупок на всю семью</h2>
+                <p class="subtitle">Мама, папа, дети — все видят, что есть дома и что нужно купить. Синхронизация мгновенно, бот в Telegram 24/7</p>
+                <div class="big-price">290 ₽</div>
+                <div class="big-price-period">в месяц • на всю семью • до 10 человек</div>
+                <a href="#" class="btn-primary btn-green">Начать бесплатно</a>
+            </div>
+            <div class="right">
+                <h4>Что вы получаете</h4>
+                <ul>
+                    <li><span class="check">✓</span> Общий список продуктов для всей семьи</li>
+                    <li><span class="check">✓</span> Мгновенная синхронизация</li>
+                    <li><span class="check">✓</span> Telegram-бот для быстрого добавления</li>
+                    <li><span class="check">✓</span> Приложение на телефон (PWA)</li>
+                    <li><span class="check">✓</span> Рецепты из того, что есть дома</li>
+                    <li><span class="check">✓</span> История покупок и трат</li>
+                </ul>
+            </div>
+        </div>
 
-                <div class="detail-card full-width">
-                    <h3>📋 База знаний (sources.json)</h3>
-                    <div class="code-block">
-{
-  "laws": {
-    "civil_code": {
-      "name": "Гражданский кодекс РФ",
-      "url": "https://www.consultant.ru/..."
+        <h3 class="section-title">Что болит → Как решаем</h3>
+        <div class="pain-solution-grid">
+            <div class="ps-card pain">
+                <h4>😣 До</h4>
+                <ul>
+                    <li>«Я купил молоко, а жена уже купила» — двойные траты</li>
+                    <li>Забыли хлеб, потому что список остался дома</li>
+                    <li>Крики через всю квартиру: «Что купить?»</li>
+                    <li>Выбросили просрочку — деньги на ветер</li>
+                    <li>Дети не знают, что дома закончилось</li>
+                </ul>
+            </div>
+            <div class="ps-card solution">
+                <h4>✅ После</h4>
+                <ul>
+                    <li>Открыли приложение — видно, что уже куплено</li>
+                    <li>Список всегда в телефоне + Telegram-бот</li>
+                    <li>Добавил продукт — все увидели. Тихо и быстро</li>
+                    <li>Раздел «Заканчивается» — покупаете вовремя</li>
+                    <li>Одна семья — один список. Без путаницы</li>
+                </ul>
+            </div>
+        </div>
+
+        <h3 class="section-title">Как это работает</h3>
+        <div class="inside-grid">
+            <div class="inside-item"><div class="emoji">📱</div><h4>Установите на телефон</h4><p>Как обычное приложение, через браузер</p></div>
+            <div class="inside-item"><div class="emoji">👨‍👩‍👧‍👦</div><h4>Пригласите семью</h4><p>По коду — за 10 секунд</p></div>
+            <div class="inside-item"><div class="emoji">➕</div><h4>Добавляйте продукты</h4><p>В приложении или через бота командой /add</p></div>
+            <div class="inside-item"><div class="emoji">🔄</div><h4>Всё синхронизируется</h4><p>Изменения у всех мгновенно</p></div>
+        </div>
+
+        <div class="testimonial">
+            <div class="quote">«Муж в магазине — я ему в бот кидаю, что закончилось. Он сразу видит список. Перестали покупать дубли. За месяц экономия около 3 000 ₽.»</div>
+            <div class="author">— Ольга, мама двоих детей</div>
+        </div>
+
+        <div class="cta-block">
+            <h3>Прекратите покупать лишнее и забывать нужное</h3>
+            <p>Бесплатный период • Вся семья • Без рекламы</p>
+            <a href="#" class="btn-primary btn-green">Подключить семью</a>
+            <p class="guarantee">📱 Работает на iPhone, Android и компьютере</p>
+        </div>
+    </div>
+    <footer>© 2024 AI & Automation Solutions</footer>
+</div>
+
+<!-- ==================== СТРАНИЦА: INDUSTRIAL PARSER ==================== -->
+<div class="page" id="page-parser">
+    <div class="container detail-page">
+        <a href="#" class="back-link" onclick="goTo('page-home')">← На главную</a>
+
+        <div class="detail-hero">
+            <div class="left">
+                <h2>Соберём и проверим данные о товарах за вас</h2>
+                <p class="subtitle">Извлекаем информацию из онлайн-каталогов, заполняем пропуски, выверяем бренды и артикулы. На выходе — чистый Excel</p>
+                <div class="big-price">4 900 ₽</div>
+                <div class="big-price-period">за проект • до 10 000 позиций</div>
+                <a href="#" class="btn-primary btn-amber">Заказать обработку</a>
+            </div>
+            <div class="right">
+                <h4>Что вы получаете</h4>
+                <ul>
+                    <li><span class="check">✓</span> Полный Excel со всеми полями</li>
+                    <li><span class="check">✓</span> Заполненные пропуски</li>
+                    <li><span class="check">✓</span> Определение брендов и артикулов</li>
+                    <li><span class="check">✓</span> Проверка цен и состояний</li>
+                    <li><span class="check">✓</span> Лог всех изменений</li>
+                    <li><span class="check">✓</span> Готово за 1 рабочий день</li>
+                </ul>
+            </div>
+        </div>
+
+        <h3 class="section-title">Что болит → Как решаем</h3>
+        <div class="pain-solution-grid">
+            <div class="ps-card pain">
+                <h4>😣 До</h4>
+                <ul>
+                    <li>Сотни позиций с пустыми полями — непонятно, что это за товар</li>
+                    <li>Ручной поиск каждого артикула — часы монотонной работы</li>
+                    <li>Бренды перепутаны, маркировка в разных форматах</li>
+                    <li>Нет времени проверить всё — ошибки уходят в закупку</li>
+                    <li>Данные разбросаны по разным источникам</li>
+                </ul>
+            </div>
+            <div class="ps-card solution">
+                <h4>✅ После</h4>
+                <ul>
+                    <li>Все поля заполнены — можно сразу работать</li>
+                    <li>Автоматический сбор с источника за 2–3 часа</li>
+                    <li>Единый формат: бренды, артикулы, цены</li>
+                    <li>95% данных проверено автоматически</li>
+                    <li>Один файл Excel — всё в одном месте</li>
+                </ul>
+            </div>
+        </div>
+
+        <h3 class="section-title">Что мы делаем</h3>
+        <div class="inside-grid">
+            <div class="inside-item"><div class="emoji">🔎</div><h4>Сбор данных</h4><p>Извлекаем 20 полей из онлайн-каталога</p></div>
+            <div class="inside-item"><div class="emoji">🏷️</div><h4>Бренды</h4><p>Определяем производителя, даже если не указан явно</p></div>
+            <div class="inside-item"><div class="emoji">📝</div><h4>Маркировка</h4><p>Извлекаем артикулы из текста описаний</p></div>
+            <div class="inside-item"><div class="emoji">✅</div><h4>Верификация</h4><p>Заполняем пропуски и исправляем ошибки</p></div>
+        </div>
+
+        <div class="testimonial">
+            <div class="quote">«Прислали файл на 2 000 позиций, половина была без маркировки. Через день получили готовую таблицу. Отдел закупок смог сразу заказать нужное. Сэкономили мне неделю работы.»</div>
+            <div class="author">— Дмитрий, руководитель отдела снабжения</div>
+        </div>
+
+        <div class="cta-block">
+            <h3>Пришлите файл — получите готовые данные завтра</h3>
+            <p>До 10 000 позиций • Конфиденциально • Оплата по результату</p>
+            <a href="#" class="btn-primary btn-amber">Обсудить проект</a>
+            <p class="guarantee">🔒 NDA по запросу • Данные не передаются третьим лицам</p>
+        </div>
+    </div>
+    <footer>© 2024 AI & Automation Solutions</footer>
+</div>
+
+<script>
+    function goTo(pageId) {
+        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+        document.getElementById(pageId).classList.add('active');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        // Обновляем хеш
+        const map = { 'page-home': '', 'page-legal': '#legal', 'page-family': '#family', 'page-parser': '#parser' };
+        history.pushState(null, '', map[pageId] || '');
     }
-  },
-  "required_clauses": [...],    // Обязательные пункты договора
-  "risk_patterns": [...],       // Опасные формулировки
-  "bureaucracy_phrases": [...], // Канцеляризмы
-  "forbidden_terms": [...]      // Запрещённые слова
-}</div>
-                </div>
-            </div>
-        </div>
-        <footer class="container">
-            <p>© 2024 Портфолио проектов | AI, Automation & Full-Stack Development</p>
-        </footer>
-    </div>
 
-    <!-- ==================== СТРАНИЦА: FAMILY SHOPPING LIST ==================== -->
-    <div class="page" id="page-family">
-        <div class="container detail-page">
-            <a href="#" class="back-button" onclick="navigateTo('page-home')">← Назад к проектам</a>
-            
-            <div class="detail-header">
-                <div class="card-icon icon-2">🛒</div>
-                <h2>Family Shopping List</h2>
-                <p class="detail-subtitle">Семейный планировщик покупок с синхронизацией в реальном времени</p>
-            </div>
+    // Кнопка "назад" браузера
+    window.addEventListener('popstate', () => {
+        const hash = window.location.hash;
+        let pageId = 'page-home';
+        if (hash === '#legal') pageId = 'page-legal';
+        if (hash === '#family') pageId = 'page-family';
+        if (hash === '#parser') pageId = 'page-parser';
+        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+        document.getElementById(pageId).classList.add('active');
+    });
 
-            <div class="detail-grid">
-                <div class="detail-card card-accent-alt">
-                    <h3>🎯 Возможности</h3>
-                    <ul>
-                        <li>Ведение общего списка продуктов для всей семьи</li>
-                        <li>Планирование покупок без лишних трат</li>
-                        <li>Realtime-синхронизация между всеми устройствами</li>
-                        <li>Telegram-бот для быстрого добавления продуктов</li>
-                        <li>Установка как PWA на главный экран телефона</li>
-                    </ul>
-                </div>
-
-                <div class="detail-card card-accent-alt">
-                    <h3>🛠️ Технологический стек</h3>
-                    <div class="code-block">
-Next.js 14          — Фронтенд (React + TypeScript)
-Tailwind CSS        — Стилизация
-Supabase            — База данных (PostgreSQL + Realtime)
-Python-Telegram-Bot — Telegram-бот
-Vercel + Railway    — Бесплатный деплой 24/7</div>
-                </div>
-
-                <div class="detail-card card-accent-alt">
-                    <h3>📱 Веб-приложение (PWA)</h3>
-                    <ul>
-                        <li>Работает как обычный сайт</li>
-                        <li>Можно установить на телефон как нативное приложение</li>
-                        <li>Адаптивный дизайн для всех устройств</li>
-                    </ul>
-                    <div class="highlight-box">
-                        🔗 <strong>Ссылка:</strong> shoppinglist-navy.vercel.app
-                    </div>
-                </div>
-
-                <div class="detail-card card-accent-alt">
-                    <h3>🤖 Telegram-бот</h3>
-                    <ul>
-                        <li><code>/start</code> — начало работы</li>
-                        <li><code>/code КОД</code> — присоединиться к семье</li>
-                        <li><code>/list</code> — что в холодильнике</li>
-                        <li><code>/add продукт</code> — добавить продукт</li>
-                        <li><code>/shopping</code> — список покупок</li>
-                        <li><code>/recipes</code> — рецепты из того, что есть</li>
-                    </ul>
-                    <div class="highlight-box">
-                        🤖 Бот работает 24/7 через Railway и не требует включённого телефона
-                    </div>
-                </div>
-
-                <div class="detail-card card-accent-alt full-width">
-                    <h3>👨‍👩‍👧‍👦 Как это работает для семьи</h3>
-                    <ul>
-                        <li><strong>Папа добавил молоко</strong> — у мамы и детей сразу видно</li>
-                        <li><strong>В магазине:</strong> открываешь <code>/shopping</code> — видишь, что нужно купить</li>
-                        <li><strong>Дома:</strong> проверяешь холодильник через <code>/list</code> перед походом в магазин</li>
-                        <li><strong>Рецепты:</strong> <code>/recipes</code> показывает, что можно приготовить из имеющихся продуктов</li>
-                    </ul>
-                </div>
-
-                <div class="detail-card card-accent-alt full-width">
-                    <h3>🎯 Какие проблемы решает</h3>
-                    <div class="detail-tags">
-                        <span class="detail-tag">«А купили ли мы молоко?»</span>
-                        <span class="detail-tag">«Зачем я купил третий пакет?»</span>
-                        <span class="detail-tag">«Что сегодня приготовить?»</span>
-                        <span class="detail-tag">«Вечно забываю хлеб»</span>
-                        <span class="detail-tag">«Разные списки у всех»</span>
-                    </div>
-                    <div class="highlight-box">
-                        💡 <strong>Итог:</strong> Full-stack проект с реальной пользой для семьи. Next.js + Supabase + Telegram Bot. Realtime-синхронизация, семейная система, PWA, готов к использованию.
-                    </div>
-                </div>
-            </div>
-        </div>
-        <footer class="container">
-            <p>© 2024 Портфолио проектов | AI, Automation & Full-Stack Development</p>
-        </footer>
-    </div>
-
-    <!-- ==================== СТРАНИЦА: INDUSTRIAL DATA PARSER ==================== -->
-    <div class="page" id="page-parser">
-        <div class="container detail-page">
-            <a href="#" class="back-button" onclick="navigateTo('page-home')">← Назад к проектам</a>
-            
-            <div class="detail-header">
-                <div class="card-icon icon-3">📊</div>
-                <h2>Industrial Data Parser</h2>
-                <p class="detail-subtitle">Извлечение и верификация данных из промышленного каталога товаров</p>
-            </div>
-
-            <div class="detail-grid">
-                <div class="detail-card card-accent-warn">
-                    <h3>🎯 Задача</h3>
-                    <ul>
-                        <li>Парсинг структурированных данных из онлайн-каталога</li>
-                        <li>Извлечение 20 полей данных в Excel</li>
-                        <li>Верификация и дополнение пустых полей в проблемных строках</li>
-                    </ul>
-                </div>
-
-                <div class="detail-card card-accent-warn">
-                    <h3>🛠️ Ключевые технологии</h3>
-                    <div class="code-block">
-Python 3            — Основной язык
-Selenium WebDriver  — Автоматизация браузера
-Pandas              — Работа с Excel
-Regex (re)          — Извлечение маркировок
-webdriver-manager   — Автоустановка драйвера
-JSON                — Сохранение прогресса</div>
-                </div>
-
-                <div class="detail-card card-accent-warn">
-                    <h3>📊 Извлекаемые поля (20 столбцов)</h3>
-                    <ul>
-                        <li>Состояние, Производитель, Заголовок</li>
-                        <li>Описание, Маркировка, Количество</li>
-                        <li>Цена, Ссылка, Изображение</li>
-                        <li>Страна, Город, Цена полная, Цена чистая</li>
-                        <li>Доставка, Продавец, Ссылка продавца</li>
-                        <li>Название, Время создания, Время обновления, ID</li>
-                    </ul>
-                </div>
-
-                <div class="detail-card card-accent-warn">
-                    <h3>🔧 Решённые проблемы</h3>
-                    <ul>
-                        <li><strong>Латиница в русском тексте:</strong> нормализация символов (HOBЫЙ → НОВЫЙ)</li>
-                        <li><strong>Мультипозиции:</strong> отдельные парсеры для каждого формата</li>
-                        <li><strong>Защита от блокировки:</strong> задержки 3–8 сек, паузы каждые 30 товаров</li>
-                        <li><strong>Сохранение прогресса:</strong> JSON-файл, можно прервать и продолжить</li>
-                    </ul>
-                </div>
-
-                <div class="detail-card card-accent-warn full-width">
-                    <h3>🔧 Ключевые методы верификации</h3>
-                    <ul>
-                        <li><strong>Автосбор словаря брендов</strong> — извлечение всех уникальных брендов из файла</li>
-                        <li><strong>Парсинг страниц</strong> — извлечение описания, маркировки, бренда, состояния</li>
-                        <li><strong>Поиск бренда</strong> — сначала в блоке «Производитель», затем в тексте объявления</li>
-                        <li><strong>Регулярные выражения</strong> — для извлечения артикулов различных форматов</li>
-                        <li><strong>Защита от блокировки</strong> — задержки 3–7 сек, паузы каждые 30 строк</li>
-                    </ul>
-                </div>
-
-                <div class="detail-card card-accent-warn">
-                    <h3>📈 Результат</h3>
-                    <ul>
-                        <li>95% брендов определено автоматически</li>
-                        <li>20+ итераций скрипта</li>
-                        <li>40+ брендов в словаре</li>
-                    </ul>
-                    <div class="highlight-box">
-                        💡 Вход: исходный Excel-файл → Выход: верифицированный файл + лог изменений в JSON
-                    </div>
-                </div>
-
-                <div class="detail-card card-accent-warn">
-                    <h3>🛡️ Меры защиты</h3>
-                    <ul>
-                        <li>Задержки между запросами: 3–8 секунд</li>
-                        <li>Паузы каждые 30 позиций</li>
-                        <li>Сохранение прогресса каждые 10 строк</li>
-                        <li>Возможность прервать и продолжить с того же места</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-        <footer class="container">
-            <p>© 2024 Портфолио проектов | AI, Automation & Full-Stack Development</p>
-        </footer>
-    </div>
-
-    <script>
-        // ========== АНИМИРОВАННЫЙ ФОН ==========
-        const canvas = document.getElementById('bgCanvas');
-        const ctx = canvas.getContext('2d');
-        let particles = [];
-
-        function resizeCanvas() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        }
-        window.addEventListener('resize', resizeCanvas);
-        resizeCanvas();
-
-        class Particle {
-            constructor() {
-                this.reset();
-            }
-            reset() {
-                this.x = Math.random() * canvas.width;
-                this.y = Math.random() * canvas.height;
-                this.size = Math.random() * 1.5 + 0.5;
-                this.speedX = (Math.random() - 0.5) * 0.3;
-                this.speedY = (Math.random() - 0.5) * 0.3;
-                this.opacity = Math.random() * 0.5 + 0.1;
-            }
-            update() {
-                this.x += this.speedX;
-                this.y += this.speedY;
-                if (this.x < 0 || this.x > canvas.width || this.y < 0 || this.y > canvas.height) {
-                    this.reset();
-                }
-            }
-            draw() {
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                ctx.fillStyle = `rgba(139, 92, 246, ${this.opacity})`;
-                ctx.fill();
-            }
-        }
-
-        for (let i = 0; i < 80; i++) {
-            particles.push(new Particle());
-        }
-
-        function animate() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            particles.forEach(p => {
-                p.update();
-                p.draw();
-            });
-            for (let i = 0; i < particles.length; i++) {
-                for (let j = i + 1; j < particles.length; j++) {
-                    const dx = particles[i].x - particles[j].x;
-                    const dy = particles[i].y - particles[j].y;
-                    const dist = Math.sqrt(dx * dx + dy * dy);
-                    if (dist < 120) {
-                        ctx.beginPath();
-                        ctx.moveTo(particles[i].x, particles[i].y);
-                        ctx.lineTo(particles[j].x, particles[j].y);
-                        ctx.strokeStyle = `rgba(139, 92, 246, ${0.06 * (1 - dist / 120)})`;
-                        ctx.lineWidth = 0.5;
-                        ctx.stroke();
-                    }
-                }
-            }
-            requestAnimationFrame(animate);
-        }
-        animate();
-
-        // ========== НАВИГАЦИЯ МЕЖДУ СТРАНИЦАМИ ==========
-        function navigateTo(pageId) {
-            // Скрываем все страницы
-            document.querySelectorAll('.page').forEach(page => {
-                page.classList.remove('active');
-            });
-            // Показываем нужную
-            const targetPage = document.getElementById(pageId);
-            if (targetPage) {
-                targetPage.classList.add('active');
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            }
-            // Обновляем URL
-            const hashMap = {
-                'page-home': '',
-                'page-legal': '#legal-ai',
-                'page-family': '#family-shopping',
-                'page-parser': '#industrial-parser'
-            };
-            if (hashMap[pageId] !== undefined) {
-                history.pushState(null, '', hashMap[pageId]);
-            }
-        }
-
-        // Обработка кнопки "Назад" в браузере
-        window.addEventListener('popstate', function() {
-            const hash = window.location.hash;
-            let pageId = 'page-home';
-            if (hash === '#legal-ai') pageId = 'page-legal';
-            if (hash === '#family-shopping') pageId = 'page-family';
-            if (hash === '#industrial-parser') pageId = 'page-parser';
-            
-            document.querySelectorAll('.page').forEach(page => {
-                page.classList.remove('active');
-            });
-            document.getElementById(pageId).classList.add('active');
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        });
-
-        // При загрузке проверяем хеш
-        const initialHash = window.location.hash;
-        if (initialHash === '#legal-ai') navigateTo('page-legal');
-        else if (initialHash === '#family-shopping') navigateTo('page-family');
-        else if (initialHash === '#industrial-parser') navigateTo('page-parser');
-    </script>
+    // При загрузке
+    const h = window.location.hash;
+    if (h === '#legal') goTo('page-legal');
+    else if (h === '#family') goTo('page-family');
+    else if (h === '#parser') goTo('page-parser');
+</script>
 </body>
 </html>
