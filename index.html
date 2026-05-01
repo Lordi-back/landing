@@ -61,6 +61,14 @@
             z-index: 1;
         }
 
+        /* ========== ГЛАВНАЯ СТРАНИЦА ========== */
+        .page {
+            display: none;
+        }
+        .page.active {
+            display: block;
+        }
+
         header {
             text-align: center;
             padding: 80px 0 60px;
@@ -145,6 +153,8 @@
             box-shadow: var(--shadow);
             display: flex;
             flex-direction: column;
+            text-decoration: none;
+            color: inherit;
         }
 
         .project-card:hover {
@@ -175,6 +185,8 @@
         .card-content {
             padding: 32px 28px;
             flex: 1;
+            display: flex;
+            flex-direction: column;
         }
 
         .card-icon {
@@ -209,6 +221,7 @@
             font-size: 0.95rem;
             color: #c0c0d0;
             line-height: 1.7;
+            flex: 1;
         }
 
         .tech-tags {
@@ -259,100 +272,121 @@
         .dot-warn { background: var(--warning); }
         .dot-info { background: var(--accent-3); }
 
-        .modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.75);
-            z-index: 100;
+        .card-arrow {
+            margin-top: 16px;
+            font-size: 0.85rem;
+            color: var(--accent-1);
+            font-weight: 500;
             display: flex;
             align-items: center;
-            justify-content: center;
+            gap: 6px;
             opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.3s;
-            backdrop-filter: blur(4px);
+            transform: translateX(-10px);
+            transition: all 0.3s;
         }
 
-        .modal-overlay.active {
+        .project-card:hover .card-arrow {
             opacity: 1;
-            pointer-events: all;
+            transform: translateX(0);
         }
 
-        .modal {
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: 20px;
-            padding: 40px;
-            max-width: 750px;
-            width: 90%;
-            max-height: 85vh;
-            overflow-y: auto;
-            position: relative;
-            box-shadow: 0 24px 64px rgba(0, 0, 0, 0.6);
+        .card-2 .card-arrow { color: var(--accent-3); }
+        .card-3 .card-arrow { color: var(--warning); }
+
+        /* ========== ДЕТАЛЬНЫЕ СТРАНИЦЫ ========== */
+        .detail-page {
+            padding-top: 40px;
+            padding-bottom: 80px;
         }
 
-        .modal-close {
-            position: sticky;
-            top: 0;
-            float: right;
-            width: 40px;
-            height: 40px;
+        .back-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
             border-radius: 10px;
             background: rgba(255, 255, 255, 0.05);
             border: 1px solid var(--border);
-            color: #fff;
+            color: var(--text);
             cursor: pointer;
-            font-size: 1.2rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            font-size: 0.95rem;
+            text-decoration: none;
             transition: all 0.2s;
-            z-index: 10;
+            margin-bottom: 32px;
         }
 
-        .modal-close:hover {
+        .back-button:hover {
             background: rgba(255, 255, 255, 0.1);
-            border-color: #fff;
+            border-color: rgba(255, 255, 255, 0.3);
         }
 
-        .modal h2 {
-            font-size: 1.8rem;
+        .detail-header {
+            margin-bottom: 40px;
+        }
+
+        .detail-header .card-icon {
+            margin-bottom: 16px;
+        }
+
+        .detail-header h2 {
+            font-size: 2.4rem;
+            font-weight: 700;
+            letter-spacing: -1px;
             margin-bottom: 8px;
-            letter-spacing: -0.5px;
         }
 
-        .modal .modal-subtitle {
-            color: var(--text-secondary);
-            margin-bottom: 24px;
-        }
-
-        .modal-section {
-            margin-bottom: 24px;
-        }
-
-        .modal-section h3 {
+        .detail-header .detail-subtitle {
             font-size: 1.1rem;
-            margin-bottom: 8px;
+            color: var(--text-secondary);
+        }
+
+        .detail-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 28px;
+        }
+
+        .detail-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 28px;
+        }
+
+        .detail-card.full-width {
+            grid-column: 1 / -1;
+        }
+
+        .detail-card h3 {
+            font-size: 1.15rem;
+            font-weight: 600;
+            margin-bottom: 16px;
             color: var(--accent-1);
         }
 
-        .modal-section ul {
+        .detail-card.card-accent-alt h3 {
+            color: var(--accent-3);
+        }
+
+        .detail-card.card-accent-warn h3 {
+            color: var(--warning);
+        }
+
+        .detail-card ul {
             list-style: none;
             padding: 0;
         }
 
-        .modal-section li {
-            padding: 6px 0;
+        .detail-card li {
+            padding: 7px 0;
             padding-left: 20px;
             position: relative;
             color: #c0c0d0;
             font-size: 0.95rem;
+            line-height: 1.6;
         }
 
-        .modal-section li::before {
+        .detail-card li::before {
             content: '▸';
             position: absolute;
             left: 0;
@@ -360,18 +394,53 @@
             font-size: 0.8rem;
         }
 
+        .detail-card.card-accent-alt li::before {
+            color: var(--accent-3);
+        }
+
+        .detail-card.card-accent-warn li::before {
+            color: var(--warning);
+        }
+
         .code-block {
             background: #0d0d15;
             border: 1px solid var(--border);
             border-radius: 12px;
             padding: 16px 20px;
-            font-family: 'Cascadia Code', 'Fira Code', monospace;
+            font-family: 'Cascadia Code', 'Fira Code', 'Courier New', monospace;
             font-size: 0.85rem;
             overflow-x: auto;
             color: #a0a0b8;
             line-height: 1.8;
             white-space: pre-wrap;
             word-break: break-all;
+        }
+
+        .detail-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 8px;
+        }
+
+        .detail-tag {
+            padding: 6px 14px;
+            border-radius: 8px;
+            font-size: 0.82rem;
+            font-weight: 500;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border);
+            color: #c0c0d0;
+        }
+
+        .highlight-box {
+            background: rgba(99, 102, 241, 0.08);
+            border: 1px solid rgba(99, 102, 241, 0.2);
+            border-radius: 12px;
+            padding: 16px 20px;
+            margin-top: 12px;
+            font-size: 0.9rem;
+            color: #b0b0c8;
         }
 
         footer {
@@ -386,8 +455,10 @@
 
         @media (max-width: 768px) {
             h1 { font-size: 2.2rem; }
+            .detail-header h2 { font-size: 1.8rem; }
             .projects-grid { grid-template-columns: 1fr; }
-            .modal { padding: 24px; }
+            .detail-grid { grid-template-columns: 1fr; }
+            .detail-card.full-width { grid-column: 1; }
             .stats-bar { gap: 20px; }
         }
     </style>
@@ -395,231 +466,396 @@
 <body>
     <canvas id="bgCanvas"></canvas>
 
-    <div class="container">
-        <header>
-            <div class="badge">🚀 ПОРТФОЛИО ПРОЕКТОВ</div>
-            <h1>AI & Automation<br>Решения</h1>
-            <p class="subtitle">Три полноценных продукта: от юридического AI-ассистента до семейного планировщика и промышленного парсера данных</p>
-            <div class="stats-bar">
-                <div class="stat-item">
-                    <div class="stat-number">3</div>
-                    <div class="stat-label">Продукта</div>
+    <!-- ==================== ГЛАВНАЯ СТРАНИЦА ==================== -->
+    <div class="page active" id="page-home">
+        <div class="container">
+            <header>
+                <div class="badge">🚀 ПОРТФОЛИО ПРОЕКТОВ</div>
+                <h1>AI & Automation<br>Решения</h1>
+                <p class="subtitle">Три полноценных продукта: от юридического AI-ассистента до семейного планировщика и промышленного парсера данных</p>
+                <div class="stats-bar">
+                    <div class="stat-item">
+                        <div class="stat-number">3</div>
+                        <div class="stat-label">Продукта</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">100%</div>
+                        <div class="stat-label">Offline-ready</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">24/7</div>
+                        <div class="stat-label">Доступность</div>
+                    </div>
                 </div>
-                <div class="stat-item">
-                    <div class="stat-number">8,461</div>
-                    <div class="stat-label">Строк данных</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-number">100%</div>
-                    <div class="stat-label">Offline-ready</div>
-                </div>
-            </div>
-        </header>
+            </header>
 
-        <div class="projects-grid">
-            <!-- Карточка 1: Юридический AI Ассистент -->
-            <div class="project-card" onclick="openModal('modal1')">
-                <div class="card-accent accent-1"></div>
-                <div class="card-content">
-                    <div class="card-icon icon-1">⚖️</div>
-                    <div class="card-title">Юридический AI Ассистент</div>
-                    <div class="card-subtitle">Десктопное приложение для юристов</div>
-                    <div class="card-description">
-                        Автоматический анализ юридических документов по трём направлениям: риски, орфография и соответствие законам. Локальная работа без интернета.
+            <div class="projects-grid">
+                <!-- Карточка 1: Юридический AI Ассистент -->
+                <a href="#legal-ai" class="project-card" onclick="navigateTo('page-legal')">
+                    <div class="card-accent accent-1"></div>
+                    <div class="card-content">
+                        <div class="card-icon icon-1">⚖️</div>
+                        <div class="card-title">Юридический AI Ассистент</div>
+                        <div class="card-subtitle">Десктопное приложение для юристов</div>
+                        <div class="card-description">
+                            Автоматический анализ юридических документов по трём направлениям: риски, орфография и соответствие законам. Локальная работа без интернета.
+                        </div>
+                        <div class="tech-tags">
+                            <span class="tech-tag">C# .NET 8.0</span>
+                            <span class="tech-tag">WPF</span>
+                            <span class="tech-tag">PDF/DOCX</span>
+                            <span class="tech-tag">AI Agents</span>
+                        </div>
+                        <div class="card-stats">
+                            <div class="card-stat"><span class="card-stat-dot"></span> 3 агента анализа</div>
+                            <div class="card-stat"><span class="card-stat-dot dot-warn"></span> Offline-first</div>
+                        </div>
+                        <div class="card-arrow">Подробнее →</div>
                     </div>
-                    <div class="tech-tags">
-                        <span class="tech-tag">C# .NET 8.0</span>
-                        <span class="tech-tag">WPF</span>
-                        <span class="tech-tag">PDF/DOCX</span>
-                        <span class="tech-tag">AI Agents</span>
-                    </div>
-                    <div class="card-stats">
-                        <div class="card-stat"><span class="card-stat-dot"></span> 3 агента анализа</div>
-                        <div class="card-stat"><span class="card-stat-dot dot-warn"></span> Offline-first</div>
-                    </div>
-                </div>
-            </div>
+                </a>
 
-            <!-- Карточка 2: Family Shopping List -->
-            <div class="project-card card-2" onclick="openModal('modal2')">
-                <div class="card-accent accent-2"></div>
-                <div class="card-content">
-                    <div class="card-icon icon-2">🛒</div>
-                    <div class="card-title">Family Shopping List</div>
-                    <div class="card-subtitle">Веб-приложение + Telegram-бот</div>
-                    <div class="card-description">
-                        Семейный помощник для покупок с realtime-синхронизацией. PWA-приложение, которое можно установить на телефон как нативное.
+                <!-- Карточка 2: Family Shopping List -->
+                <a href="#family-shopping" class="project-card card-2" onclick="navigateTo('page-family')">
+                    <div class="card-accent accent-2"></div>
+                    <div class="card-content">
+                        <div class="card-icon icon-2">🛒</div>
+                        <div class="card-title">Family Shopping List</div>
+                        <div class="card-subtitle">Веб-приложение + Telegram-бот</div>
+                        <div class="card-description">
+                            Семейный помощник для покупок с realtime-синхронизацией. PWA-приложение, которое можно установить на телефон как нативное.
+                        </div>
+                        <div class="tech-tags">
+                            <span class="tech-tag">Next.js 14</span>
+                            <span class="tech-tag">Supabase</span>
+                            <span class="tech-tag">Telegram Bot</span>
+                            <span class="tech-tag">PWA</span>
+                        </div>
+                        <div class="card-stats">
+                            <div class="card-stat"><span class="card-stat-dot dot-info"></span> Realtime-синхронизация</div>
+                            <div class="card-stat"><span class="card-stat-dot"></span> 24/7 бот</div>
+                        </div>
+                        <div class="card-arrow">Подробнее →</div>
                     </div>
-                    <div class="tech-tags">
-                        <span class="tech-tag">Next.js 14</span>
-                        <span class="tech-tag">Supabase</span>
-                        <span class="tech-tag">Telegram Bot</span>
-                        <span class="tech-tag">PWA</span>
-                    </div>
-                    <div class="card-stats">
-                        <div class="card-stat"><span class="card-stat-dot dot-info"></span> Realtime-синхронизация</div>
-                        <div class="card-stat"><span class="card-stat-dot"></span> 24/7 бот</div>
-                    </div>
-                </div>
-            </div>
+                </a>
 
-            <!-- Карточка 3: Avito Parser -->
-            <div class="project-card card-3" onclick="openModal('modal3')">
-                <div class="card-accent accent-3"></div>
-                <div class="card-content">
-                    <div class="card-icon icon-3">📊</div>
-                    <div class="card-title">Avito Industrial Parser</div>
-                    <div class="card-subtitle">Парсер + верификатор данных</div>
-                    <div class="card-description">
-                        Извлечение и верификация 8,461 позиций товаров из магазина Avito. Автоматическое определение брендов, маркировок и состояний.
+                <!-- Карточка 3: Industrial Parser -->
+                <a href="#industrial-parser" class="project-card card-3" onclick="navigateTo('page-parser')">
+                    <div class="card-accent accent-3"></div>
+                    <div class="card-content">
+                        <div class="card-icon icon-3">📊</div>
+                        <div class="card-title">Industrial Data Parser</div>
+                        <div class="card-subtitle">Парсер + верификатор данных</div>
+                        <div class="card-description">
+                            Извлечение и верификация данных из промышленного каталога. Автоматическое определение брендов, маркировок и состояний товаров.
+                        </div>
+                        <div class="tech-tags">
+                            <span class="tech-tag">Python 3</span>
+                            <span class="tech-tag">Selenium</span>
+                            <span class="tech-tag">Pandas</span>
+                            <span class="tech-tag">Regex</span>
+                        </div>
+                        <div class="card-stats">
+                            <div class="card-stat"><span class="card-stat-dot"></span> 95% брендов определено</div>
+                            <div class="card-stat"><span class="card-stat-dot dot-warn"></span> 20+ итераций</div>
+                        </div>
+                        <div class="card-arrow">Подробнее →</div>
                     </div>
-                    <div class="tech-tags">
-                        <span class="tech-tag">Python 3</span>
-                        <span class="tech-tag">Selenium</span>
-                        <span class="tech-tag">Pandas</span>
-                        <span class="tech-tag">Regex</span>
-                    </div>
-                    <div class="card-stats">
-                        <div class="card-stat"><span class="card-stat-dot"></span> 95% брендов определено</div>
-                        <div class="card-stat"><span class="card-stat-dot dot-warn"></span> 20 версий скрипта</div>
-                    </div>
-                </div>
+                </a>
             </div>
         </div>
+        <footer class="container">
+            <p>© 2024 Портфолио проектов | AI, Automation & Full-Stack Development</p>
+        </footer>
     </div>
 
-    <!-- Модальные окна -->
-    <div class="modal-overlay" id="modal1">
-        <div class="modal">
-            <button class="modal-close" onclick="closeModal('modal1')">✕</button>
-            <h2>⚖️ Юридический AI Ассистент</h2>
-            <p class="modal-subtitle">Полноценное десктопное приложение для автоматического анализа документов</p>
+    <!-- ==================== СТРАНИЦА: ЮРИДИЧЕСКИЙ AI АССИСТЕНТ ==================== -->
+    <div class="page" id="page-legal">
+        <div class="container detail-page">
+            <a href="#" class="back-button" onclick="navigateTo('page-home')">← Назад к проектам</a>
             
-            <div class="modal-section">
-                <h3>🎯 Что делает</h3>
-                <ul>
-                    <li>Анализ юридических рисков (двусмысленности, противоречия)</li>
-                    <li>Проверка орфографии и стиля (канцеляризмы, ошибки)</li>
-                    <li>Контроль соответствия законам (ссылки, обязательные пункты)</li>
-                </ul>
+            <div class="detail-header">
+                <div class="card-icon icon-1">⚖️</div>
+                <h2>Юридический AI Ассистент</h2>
+                <p class="detail-subtitle">Полноценное десктопное приложение для автоматического анализа юридических документов</p>
             </div>
 
-            <div class="modal-section">
-                <h3>🛠️ Технологический стек</h3>
-                <div class="code-block">
+            <div class="detail-grid">
+                <div class="detail-card">
+                    <h3>🎯 Что делает</h3>
+                    <ul>
+                        <li>Анализ юридических рисков (двусмысленности, противоречия)</li>
+                        <li>Проверка орфографии и стиля (канцеляризмы, ошибки)</li>
+                        <li>Контроль соответствия законам (ссылки, обязательные пункты)</li>
+                        <li>Подсветка проблем прямо в тексте документа</li>
+                    </ul>
+                </div>
+
+                <div class="detail-card">
+                    <h3>🛠️ Технологический стек</h3>
+                    <div class="code-block">
 WPF + XAML          — Интерфейс пользователя
 C# .NET 8.0         — Логика приложения
 PdfPig              — Парсер PDF
 OpenXml             — Парсер DOCX
 Newtonsoft.Json     — База законов (sources.json)
-Inno Setup          — Инсталлятор (~55 MB)</div>
-            </div>
+Inno Setup          — Инсталлятор</div>
+                </div>
 
-            <div class="modal-section">
-                <h3>✅ Ключевые фичи</h3>
-                <ul>
-                    <li>Поддержка PDF, DOCX, TXT</li>
-                    <li>3 параллельных агента анализа</li>
-                    <li>Цветовая подсветка проблем в тексте</li>
-                    <li>Hyperlink'и на законы в браузере</li>
-                    <li>Инсталлятор с автоустановкой .NET</li>
-                    <li>Работает на Windows 7–11</li>
-                    <li>Полностью локально — документы не покидают компьютер</li>
-                </ul>
+                <div class="detail-card full-width">
+                    <h3>🏗️ Архитектура приложения</h3>
+                    <div class="code-block">
+┌─────────────────────────────────────────┐
+│              WPF Application            │
+├─────────────────────────────────────────┤
+│  UI Layer                               │
+│  • MainWindow.xaml — интерфейс          │
+│  • RichTextBox — текст с подсветкой     │
+│  • ItemsControl — список проблем        │
+├─────────────────────────────────────────┤
+│  Business Logic Layer                   │
+│  • UnifiedAnalyzer — координация        │
+│  • LawChecker — проверка законов        │
+│  • GrammarChecker — орфография          │
+│  • RiskChecker — риски                  │
+├─────────────────────────────────────────┤
+│  Data Layer                             │
+│  • sources.json — база законов          │
+│  • DocumentParser — PDF/DOCX/TXT        │
+└─────────────────────────────────────────┘</div>
+                </div>
+
+                <div class="detail-card">
+                    <h3>✅ Ключевые возможности</h3>
+                    <ul>
+                        <li>Поддержка PDF, DOCX, TXT</li>
+                        <li>3 параллельных агента анализа</li>
+                        <li>Цветовая подсветка: красный / жёлтый / зелёный</li>
+                        <li>Hyperlink'и на законы в браузере</li>
+                        <li>Инсталлятор ~55 MB с автоустановкой .NET</li>
+                    </ul>
+                </div>
+
+                <div class="detail-card">
+                    <h3>🔒 Безопасность</h3>
+                    <ul>
+                        <li>Работает полностью локально</li>
+                        <li>Документы не покидают компьютер</li>
+                        <li>Не требует подключения к интернету</li>
+                        <li>Поддержка Windows 7–11</li>
+                    </ul>
+                    <div class="highlight-box">
+                        💡 Идеально для юридических фирм, работающих с конфиденциальными документами
+                    </div>
+                </div>
+
+                <div class="detail-card full-width">
+                    <h3>📋 База знаний (sources.json)</h3>
+                    <div class="code-block">
+{
+  "laws": {
+    "civil_code": {
+      "name": "Гражданский кодекс РФ",
+      "url": "https://www.consultant.ru/..."
+    }
+  },
+  "required_clauses": [...],    // Обязательные пункты договора
+  "risk_patterns": [...],       // Опасные формулировки
+  "bureaucracy_phrases": [...], // Канцеляризмы
+  "forbidden_terms": [...]      // Запрещённые слова
+}</div>
+                </div>
             </div>
         </div>
+        <footer class="container">
+            <p>© 2024 Портфолио проектов | AI, Automation & Full-Stack Development</p>
+        </footer>
     </div>
 
-    <div class="modal-overlay" id="modal2">
-        <div class="modal">
-            <button class="modal-close" onclick="closeModal('modal2')">✕</button>
-            <h2>🛒 Family Shopping List</h2>
-            <p class="modal-subtitle">Семейный планировщик покупок с синхронизацией в реальном времени</p>
+    <!-- ==================== СТРАНИЦА: FAMILY SHOPPING LIST ==================== -->
+    <div class="page" id="page-family">
+        <div class="container detail-page">
+            <a href="#" class="back-button" onclick="navigateTo('page-home')">← Назад к проектам</a>
             
-            <div class="modal-section">
-                <h3>🎯 Что делает</h3>
-                <ul>
-                    <li>Ведение общего списка продуктов для всей семьи</li>
-                    <li>Планирование покупок без лишних трат</li>
-                    <li>Realtime-синхронизация между всеми устройствами</li>
-                    <li>Telegram-бот для быстрого добавления продуктов</li>
-                    <li>Установка как PWA на главный экран телефона</li>
-                </ul>
+            <div class="detail-header">
+                <div class="card-icon icon-2">🛒</div>
+                <h2>Family Shopping List</h2>
+                <p class="detail-subtitle">Семейный планировщик покупок с синхронизацией в реальном времени</p>
             </div>
 
-            <div class="modal-section">
-                <h3>🛠️ Технологический стек</h3>
-                <div class="code-block">
+            <div class="detail-grid">
+                <div class="detail-card card-accent-alt">
+                    <h3>🎯 Возможности</h3>
+                    <ul>
+                        <li>Ведение общего списка продуктов для всей семьи</li>
+                        <li>Планирование покупок без лишних трат</li>
+                        <li>Realtime-синхронизация между всеми устройствами</li>
+                        <li>Telegram-бот для быстрого добавления продуктов</li>
+                        <li>Установка как PWA на главный экран телефона</li>
+                    </ul>
+                </div>
+
+                <div class="detail-card card-accent-alt">
+                    <h3>🛠️ Технологический стек</h3>
+                    <div class="code-block">
 Next.js 14          — Фронтенд (React + TypeScript)
 Tailwind CSS        — Стилизация
 Supabase            — База данных (PostgreSQL + Realtime)
 Python-Telegram-Bot — Telegram-бот
 Vercel + Railway    — Бесплатный деплой 24/7</div>
-            </div>
+                </div>
 
-            <div class="modal-section">
-                <h3>🔗 Ссылки</h3>
-                <ul>
-                    <li>Веб-приложение: shoppinglist-navy.vercel.app</li>
-                    <li>GitHub: github.com/Lordi-back/Shopping-List</li>
-                </ul>
+                <div class="detail-card card-accent-alt">
+                    <h3>📱 Веб-приложение (PWA)</h3>
+                    <ul>
+                        <li>Работает как обычный сайт</li>
+                        <li>Можно установить на телефон как нативное приложение</li>
+                        <li>Адаптивный дизайн для всех устройств</li>
+                    </ul>
+                    <div class="highlight-box">
+                        🔗 <strong>Ссылка:</strong> shoppinglist-navy.vercel.app
+                    </div>
+                </div>
+
+                <div class="detail-card card-accent-alt">
+                    <h3>🤖 Telegram-бот</h3>
+                    <ul>
+                        <li><code>/start</code> — начало работы</li>
+                        <li><code>/code КОД</code> — присоединиться к семье</li>
+                        <li><code>/list</code> — что в холодильнике</li>
+                        <li><code>/add продукт</code> — добавить продукт</li>
+                        <li><code>/shopping</code> — список покупок</li>
+                        <li><code>/recipes</code> — рецепты из того, что есть</li>
+                    </ul>
+                    <div class="highlight-box">
+                        🤖 Бот работает 24/7 через Railway и не требует включённого телефона
+                    </div>
+                </div>
+
+                <div class="detail-card card-accent-alt full-width">
+                    <h3>👨‍👩‍👧‍👦 Как это работает для семьи</h3>
+                    <ul>
+                        <li><strong>Папа добавил молоко</strong> — у мамы и детей сразу видно</li>
+                        <li><strong>В магазине:</strong> открываешь <code>/shopping</code> — видишь, что нужно купить</li>
+                        <li><strong>Дома:</strong> проверяешь холодильник через <code>/list</code> перед походом в магазин</li>
+                        <li><strong>Рецепты:</strong> <code>/recipes</code> показывает, что можно приготовить из имеющихся продуктов</li>
+                    </ul>
+                </div>
+
+                <div class="detail-card card-accent-alt full-width">
+                    <h3>🎯 Какие проблемы решает</h3>
+                    <div class="detail-tags">
+                        <span class="detail-tag">«А купили ли мы молоко?»</span>
+                        <span class="detail-tag">«Зачем я купил третий пакет?»</span>
+                        <span class="detail-tag">«Что сегодня приготовить?»</span>
+                        <span class="detail-tag">«Вечно забываю хлеб»</span>
+                        <span class="detail-tag">«Разные списки у всех»</span>
+                    </div>
+                    <div class="highlight-box">
+                        💡 <strong>Итог:</strong> Full-stack проект с реальной пользой для семьи. Next.js + Supabase + Telegram Bot. Realtime-синхронизация, семейная система, PWA, готов к использованию.
+                    </div>
+                </div>
             </div>
         </div>
+        <footer class="container">
+            <p>© 2024 Портфолио проектов | AI, Automation & Full-Stack Development</p>
+        </footer>
     </div>
 
-    <div class="modal-overlay" id="modal3">
-        <div class="modal">
-            <button class="modal-close" onclick="closeModal('modal3')">✕</button>
-            <h2>📊 Avito Industrial Parser</h2>
-            <p class="modal-subtitle">Парсер + верификатор данных промышленного магазина Avito</p>
+    <!-- ==================== СТРАНИЦА: INDUSTRIAL DATA PARSER ==================== -->
+    <div class="page" id="page-parser">
+        <div class="container detail-page">
+            <a href="#" class="back-button" onclick="navigateTo('page-home')">← Назад к проектам</a>
             
-            <div class="modal-section">
-                <h3>🎯 Задача</h3>
-                <ul>
-                    <li>Парсинг 8,461 позиции из 1,500 объявлений Avito</li>
-                    <li>Извлечение 20 полей данных в Excel</li>
-                    <li>Верификация и дополнение пустых полей (1,610 проблемных строк)</li>
-                </ul>
+            <div class="detail-header">
+                <div class="card-icon icon-3">📊</div>
+                <h2>Industrial Data Parser</h2>
+                <p class="detail-subtitle">Извлечение и верификация данных из промышленного каталога товаров</p>
             </div>
 
-            <div class="modal-section">
-                <h3>🛠️ Ключевые технологии</h3>
-                <div class="code-block">
+            <div class="detail-grid">
+                <div class="detail-card card-accent-warn">
+                    <h3>🎯 Задача</h3>
+                    <ul>
+                        <li>Парсинг структурированных данных из онлайн-каталога</li>
+                        <li>Извлечение 20 полей данных в Excel</li>
+                        <li>Верификация и дополнение пустых полей в проблемных строках</li>
+                    </ul>
+                </div>
+
+                <div class="detail-card card-accent-warn">
+                    <h3>🛠️ Ключевые технологии</h3>
+                    <div class="code-block">
 Python 3            — Основной язык
-Selenium WebDriver  — Автоматизация Chrome
+Selenium WebDriver  — Автоматизация браузера
 Pandas              — Работа с Excel
-Regex (re)          — Извлечение маркировок, цен
+Regex (re)          — Извлечение маркировок
 webdriver-manager   — Автоустановка драйвера
 JSON                — Сохранение прогресса</div>
-            </div>
+                </div>
 
-            <div class="modal-section">
-                <h3>🔧 Решённые проблемы</h3>
-                <ul>
-                    <li>Латиница в русском тексте (HOBЫЙ → НОВЫЙ) — нормализация символов</li>
-                    <li>Мультипозиции (Mitsubishi, Wika) — отдельные парсеры</li>
-                    <li>Защита от блокировки — задержки 3–8 сек, паузы каждые 30 товаров</li>
-                    <li>Сохранение прогресса — можно прервать и продолжить</li>
-                </ul>
-            </div>
+                <div class="detail-card card-accent-warn">
+                    <h3>📊 Извлекаемые поля (20 столбцов)</h3>
+                    <ul>
+                        <li>Состояние, Производитель, Заголовок</li>
+                        <li>Описание, Маркировка, Количество</li>
+                        <li>Цена, Ссылка, Изображение</li>
+                        <li>Страна, Город, Цена полная, Цена чистая</li>
+                        <li>Доставка, Продавец, Ссылка продавца</li>
+                        <li>Название, Время создания, Время обновления, ID</li>
+                    </ul>
+                </div>
 
-            <div class="modal-section">
-                <h3>📈 Результат</h3>
-                <ul>
-                    <li>95% брендов определено автоматически</li>
-                    <li>20 версий скрипта (от v1.0 до v20.1)</li>
-                    <li>40+ брендов в словаре</li>
-                </ul>
+                <div class="detail-card card-accent-warn">
+                    <h3>🔧 Решённые проблемы</h3>
+                    <ul>
+                        <li><strong>Латиница в русском тексте:</strong> нормализация символов (HOBЫЙ → НОВЫЙ)</li>
+                        <li><strong>Мультипозиции:</strong> отдельные парсеры для каждого формата</li>
+                        <li><strong>Защита от блокировки:</strong> задержки 3–8 сек, паузы каждые 30 товаров</li>
+                        <li><strong>Сохранение прогресса:</strong> JSON-файл, можно прервать и продолжить</li>
+                    </ul>
+                </div>
+
+                <div class="detail-card card-accent-warn full-width">
+                    <h3>🔧 Ключевые методы верификации</h3>
+                    <ul>
+                        <li><strong>Автосбор словаря брендов</strong> — извлечение всех уникальных брендов из файла</li>
+                        <li><strong>Парсинг страниц</strong> — извлечение описания, маркировки, бренда, состояния</li>
+                        <li><strong>Поиск бренда</strong> — сначала в блоке «Производитель», затем в тексте объявления</li>
+                        <li><strong>Регулярные выражения</strong> — для извлечения артикулов различных форматов</li>
+                        <li><strong>Защита от блокировки</strong> — задержки 3–7 сек, паузы каждые 30 строк</li>
+                    </ul>
+                </div>
+
+                <div class="detail-card card-accent-warn">
+                    <h3>📈 Результат</h3>
+                    <ul>
+                        <li>95% брендов определено автоматически</li>
+                        <li>20+ итераций скрипта</li>
+                        <li>40+ брендов в словаре</li>
+                    </ul>
+                    <div class="highlight-box">
+                        💡 Вход: исходный Excel-файл → Выход: верифицированный файл + лог изменений в JSON
+                    </div>
+                </div>
+
+                <div class="detail-card card-accent-warn">
+                    <h3>🛡️ Меры защиты</h3>
+                    <ul>
+                        <li>Задержки между запросами: 3–8 секунд</li>
+                        <li>Паузы каждые 30 позиций</li>
+                        <li>Сохранение прогресса каждые 10 строк</li>
+                        <li>Возможность прервать и продолжить с того же места</li>
+                    </ul>
+                </div>
             </div>
         </div>
+        <footer class="container">
+            <p>© 2024 Портфолио проектов | AI, Automation & Full-Stack Development</p>
+        </footer>
     </div>
 
-    <footer class="container">
-        <p>© 2024 Портфолио проектов | AI, Automation & Full-Stack Development</p>
-    </footer>
-
     <script>
-        // Анимированный фон
+        // ========== АНИМИРОВАННЫЙ ФОН ==========
         const canvas = document.getElementById('bgCanvas');
         const ctx = canvas.getContext('2d');
         let particles = [];
@@ -668,7 +904,6 @@ JSON                — Сохранение прогресса</div>
                 p.update();
                 p.draw();
             });
-            // Соединяем близкие частицы
             for (let i = 0; i < particles.length; i++) {
                 for (let j = i + 1; j < particles.length; j++) {
                     const dx = particles[i].x - particles[j].x;
@@ -688,36 +923,50 @@ JSON                — Сохранение прогресса</div>
         }
         animate();
 
-        // Модальные окна
-        function openModal(id) {
-            document.getElementById(id).classList.add('active');
-            document.body.style.overflow = 'hidden';
-        }
-
-        function closeModal(id) {
-            document.getElementById(id).classList.remove('active');
-            document.body.style.overflow = '';
-        }
-
-        // Закрытие по клику на оверлей
-        document.querySelectorAll('.modal-overlay').forEach(overlay => {
-            overlay.addEventListener('click', function(e) {
-                if (e.target === this) {
-                    this.classList.remove('active');
-                    document.body.style.overflow = '';
-                }
+        // ========== НАВИГАЦИЯ МЕЖДУ СТРАНИЦАМИ ==========
+        function navigateTo(pageId) {
+            // Скрываем все страницы
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
             });
+            // Показываем нужную
+            const targetPage = document.getElementById(pageId);
+            if (targetPage) {
+                targetPage.classList.add('active');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+            // Обновляем URL
+            const hashMap = {
+                'page-home': '',
+                'page-legal': '#legal-ai',
+                'page-family': '#family-shopping',
+                'page-parser': '#industrial-parser'
+            };
+            if (hashMap[pageId] !== undefined) {
+                history.pushState(null, '', hashMap[pageId]);
+            }
+        }
+
+        // Обработка кнопки "Назад" в браузере
+        window.addEventListener('popstate', function() {
+            const hash = window.location.hash;
+            let pageId = 'page-home';
+            if (hash === '#legal-ai') pageId = 'page-legal';
+            if (hash === '#family-shopping') pageId = 'page-family';
+            if (hash === '#industrial-parser') pageId = 'page-parser';
+            
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
+            });
+            document.getElementById(pageId).classList.add('active');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         });
 
-        // Закрытие по Escape
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') {
-                document.querySelectorAll('.modal-overlay.active').forEach(overlay => {
-                    overlay.classList.remove('active');
-                });
-                document.body.style.overflow = '';
-            }
-        });
+        // При загрузке проверяем хеш
+        const initialHash = window.location.hash;
+        if (initialHash === '#legal-ai') navigateTo('page-legal');
+        else if (initialHash === '#family-shopping') navigateTo('page-family');
+        else if (initialHash === '#industrial-parser') navigateTo('page-parser');
     </script>
 </body>
 </html>
