@@ -461,6 +461,51 @@
             margin-top: 14px;
         }
 
+        /* Политика возврата */
+        .refund-policy {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 28px 32px;
+            margin-top: 32px;
+        }
+        .refund-policy h3 {
+            font-size: 1.15rem;
+            font-weight: 700;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .refund-policy ul {
+            list-style: none;
+        }
+        .refund-policy li {
+            padding: 7px 0;
+            font-size: 0.92rem;
+            color: #b0b0c0;
+            line-height: 1.55;
+            padding-left: 20px;
+            position: relative;
+        }
+        .refund-policy li::before {
+            content: '•';
+            position: absolute;
+            left: 4px;
+            color: var(--text-secondary);
+        }
+        .refund-policy li strong {
+            color: #d0d0e0;
+        }
+
+        .download-hint {
+            display: block;
+            font-size: 0.82rem;
+            color: var(--text-secondary);
+            margin-top: 10px;
+            font-weight: 400;
+        }
+
         @media (max-width: 768px) {
             .hero-main h1 { font-size: 2rem; }
             .detail-hero { grid-template-columns: 1fr; }
@@ -548,7 +593,7 @@
         <div class="custom-niche">
             <h3>🤔 Не нашли свою нишу?</h3>
             <p>Мы делаем решения под заказ для разных отраслей. Опишите задачу — предложим инструмент под вас</p>
-            <a href="#" class="btn-outline" onclick="alert('Форма обратной связи скоро появится')">Заполнить форму →</a>
+            <a href="https://forms.gle/TSYq5r7RCM9n6PrA9" class="btn-outline" target="_blank">Заполнить форму →</a>
         </div>
     </div>
 
@@ -566,9 +611,9 @@
             </div>
             <div class="footer-col">
                 <h4>Связаться</h4>
-                <span>📧 почта — lordvinogradoff@yandex.ru</span>
-                <a href="#" onclick="https://forms.gle/TSYq5r7RCM9n6PrA9" >📋 Форма обратной связи - https://forms.gle/TSYq5r7RCM9n6PrA9</a>
-                <a href="#" onclick="alert('Форма скоро появится')">🤔 Не нашли свою нишу?</a>
+                <a href="mailto:lordvinogradoff@yandex.ru">📧 lordvinogradoff@yandex.ru</a>
+                <a href="https://forms.gle/TSYq5r7RCM9n6PrA9" target="_blank">📋 Форма обратной связи</a>
+                <a href="https://forms.gle/TSYq5r7RCM9n6PrA9" target="_blank">🤔 Не нашли свою нишу?</a>
             </div>
             <div class="footer-col">
                 <h4>О сервисе</h4>
@@ -594,7 +639,9 @@
                 <p class="subtitle">AI-ассистент находит юридические риски, ошибки и несоответствия законам — без интернета, прямо на вашем компьютере</p>
                 <div class="big-price">350 ₽</div>
                 <div class="big-price-period">в месяц • лицензия на 1 рабочее место</div>
-                <a href="#" class="btn-primary btn-accent">Попробовать бесплатно 14 дней</a>
+                <!-- Кнопка скачивает инсталлятор. Оплата внутри приложения -->
+                <a href="#" class="btn-primary btn-accent" onclick="downloadInstaller('legal-ai')">Скачать и попробовать бесплатно</a>
+                <span class="download-hint">💡 Установите приложение — пробный период 14 дней. Оплата внутри приложения</span>
             </div>
             <div class="right">
                 <h4>Что вы получаете</h4>
@@ -641,16 +688,24 @@
             <div class="inside-item"><div class="emoji">🎨</div><h4>Цветовая подсветка</h4><p>Красный — критично, жёлтый — внимание</p></div>
         </div>
 
-      <!--  <div class="testimonial">
-            <div class="quote">«Раньше я проверял один договор 40 минут. Теперь закидываю в программу — и через минуту вижу всё, что нужно поправить. За месяц ни одной возвращённой претензии.»</div>
-            <div class="author">— Алексей, корпоративный юрист, 8 лет практики</div>
-        </div>-->
+        <!-- Политика возврата -->
+        <div class="refund-policy">
+            <h3>💰 Политика возврата</h3>
+            <ul>
+                <li>Возврат средств возможен в течение <strong>7 календарных дней</strong> после покупки</li>
+                <li>Возврат возможен <strong>только если лицензионный ключ не был активирован</strong></li>
+                <li>Для возврата отправьте запрос на почту: <strong>lordvinogradoff@yandex.ru</strong></li>
+                <li>В письме укажите: лицензионный ключ, email, причину возврата</li>
+                <li>Деньги возвращаются в течение <strong>3-10 рабочих дней</strong></li>
+                <li>После активации ключа возврат <strong>невозможен</strong></li>
+            </ul>
+        </div>
 
         <div class="cta-block">
             <h3>Начните проверять договоры быстрее уже сегодня</h3>
-            <p>7 дней бесплатно • Без ограничений • Без интернета</p>
-            <a href="#" class="btn-primary btn-accent">Попробовать бесплатно</a>
-            <p class="guarantee">🔒 Документы остаются на вашем компьютере</p>
+            <p>14 дней бесплатно • Без ограничений • Без интернета</p>
+            <a href="#" class="btn-primary btn-accent" onclick="downloadInstaller('legal-ai')">⬇️ Скачать инсталлятор</a>
+            <p class="guarantee">🔒 Документы остаются на вашем компьютере • Windows 7–11</p>
         </div>
     </div>
     <footer style="border-top:1px solid var(--border); padding:24px 0; text-align:center; color:var(--text-secondary); font-size:0.8rem;">
@@ -669,7 +724,8 @@
                 <p class="subtitle">Мама, папа, дети — все видят, что есть дома и что нужно купить. Синхронизация мгновенно, бот в Telegram 24/7</p>
                 <div class="big-price">149 ₽</div>
                 <div class="big-price-period">в месяц • на всю семью • до 10 человек</div>
-                <a href="#" class="btn-primary btn-green">Начать бесплатно</a>
+                <a href="https://shoppinglist-navy.vercel.app" class="btn-primary btn-green" target="_blank">Открыть приложение</a>
+                <span class="download-hint">💡 Работает в браузере. Можно установить на телефон как приложение</span>
             </div>
             <div class="right">
                 <h4>Что вы получаете</h4>
@@ -721,7 +777,7 @@
         <div class="cta-block">
             <h3>Прекратите покупать лишнее и забывать нужное</h3>
             <p>Бесплатный период • Вся семья • Без рекламы</p>
-            <a href="#" class="btn-primary btn-green">Подключить семью</a>
+            <a href="https://shoppinglist-navy.vercel.app" class="btn-primary btn-green" target="_blank">Подключить семью</a>
             <p class="guarantee">📱 Работает на iPhone, Android и компьютере</p>
         </div>
     </div>
@@ -741,7 +797,7 @@
                 <p class="subtitle">Извлекаем информацию из онлайн-каталогов, заполняем пропуски, выверяем бренды и артикулы. На выходе — чистый Excel</p>
                 <div class="big-price">от 13 000 ₽</div>
                 <div class="big-price-period">за проект • зависит от объёма</div>
-                <a href="#" class="btn-primary btn-amber">Заказать обработку</a>
+                <a href="https://forms.gle/TSYq5r7RCM9n6PrA9" class="btn-primary btn-amber" target="_blank">Заказать обработку</a>
             </div>
             <div class="right">
                 <h4>Что вы получаете</h4>
@@ -794,7 +850,7 @@
         <div class="cta-block">
             <h3>Пришлите файл — получите готовые данные завтра</h3>
             <p>До 10 000 позиций • Конфиденциально • Оплата по результату</p>
-            <a href="#" class="btn-primary btn-amber">Обсудить проект</a>
+            <a href="https://forms.gle/TSYq5r7RCM9n6PrA9" class="btn-primary btn-amber" target="_blank">Обсудить проект</a>
             <p class="guarantee">🔒 NDA по запросу • Данные не передаются третьим лицам</p>
         </div>
     </div>
@@ -810,6 +866,14 @@
         window.scrollTo({ top: 0, behavior: 'smooth' });
         const map = { 'page-home': '', 'page-legal': '#legal', 'page-family': '#family', 'page-parser': '#parser' };
         history.pushState(null, '', map[pageId] || '');
+    }
+
+    // Обработчик для кнопки скачивания инсталлятора
+    function downloadInstaller(product) {
+        // Когда будет готов инсталлятор, замените ссылку ниже на реальную
+        alert('Инсталлятор скоро будет доступен для скачивания. Оставьте заявку через форму обратной связи, и мы сообщим о готовности.');
+        // Пример реальной ссылки:
+        // window.location.href = '/installers/' + product + '-setup.exe';
     }
 
     window.addEventListener('popstate', () => {
