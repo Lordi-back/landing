@@ -867,6 +867,11 @@
         history.pushState(null, '', map[pageId] || '');
     }
 
+    // Прямая ссылка на инсталлятор
+    function downloadInstaller(product) {
+        window.location.href = 'https://drive.google.com/uc?export=download&id=1uoB8mkep7FCko3i8HG8sG2WxpE8xryzr';
+    }
+
     window.addEventListener('popstate', () => {
         const hash = window.location.hash;
         let pageId = 'page-home';
