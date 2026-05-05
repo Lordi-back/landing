@@ -612,7 +612,7 @@
             <div class="footer-col">
                 <h4>Связаться</h4>
                 <a href="mailto:lordvinogradoff@yandex.ru">📧 lordvinogradoff@yandex.ru</a>
-                <a href="https://forms.gle/wPJXYjm4XFjGCzfd9" target="_blank">📋 Форма обратной связи</a>
+                <a href="https://forms.gle/TSYq5r7RCM9n6PrA9" target="_blank">📋 Форма обратной связи</a>
                 <a href="https://forms.gle/TSYq5r7RCM9n6PrA9" target="_blank">🤔 Не нашли свою нишу?</a>
             </div>
             <div class="footer-col">
@@ -639,8 +639,7 @@
                 <p class="subtitle">AI-ассистент находит юридические риски, ошибки и несоответствия законам — без интернета, прямо на вашем компьютере</p>
                 <div class="big-price">350 ₽</div>
                 <div class="big-price-period">в месяц • лицензия на 1 рабочее место</div>
-                <!-- Кнопка скачивает инсталлятор. Оплата внутри приложения -->
-                <a href="#" class="btn-primary btn-accent" onclick="downloadInstaller('legal-ai')">Скачать и попробовать бесплатно</a>
+                <a href="https://drive.google.com/uc?export=download&id=1uoB8mkep7FCko3i8HG8sG2WxpE8xryzr" class="btn-primary btn-accent">⬇️ Скачать бесплатно (пробный период 14 дней)</a>
                 <span class="download-hint">💡 Установите приложение — пробный период 14 дней. Оплата внутри приложения</span>
             </div>
             <div class="right">
@@ -704,7 +703,7 @@
         <div class="cta-block">
             <h3>Начните проверять договоры быстрее уже сегодня</h3>
             <p>14 дней бесплатно • Без ограничений • Без интернета</p>
-            <a href="#" class="btn-primary btn-accent" onclick="downloadInstaller('legal-ai')">⬇️ Скачать инсталлятор</a>
+            <a href="https://drive.google.com/uc?export=download&id=1uoB8mkep7FCko3i8HG8sG2WxpE8xryzr" class="btn-primary btn-accent">⬇️ Скачать инсталлятор</a>
             <p class="guarantee">🔒 Документы остаются на вашем компьютере • Windows 7–11</p>
         </div>
     </div>
@@ -734,7 +733,7 @@
                     <li><span class="check">✓</span> Мгновенная синхронизация</li>
                     <li><span class="check">✓</span> Telegram-бот для быстрого добавления</li>
                     <li><span class="check">✓</span> Приложение на телефон (PWA)</li>
-                    <li><span class="check">✓</span> Рецепты из того, что есть дома</li>
+                    <li><span class="check">✓</span> Рецепты из того, что есть дома - в разработке</li>
                 </ul>
             </div>
         </div>
@@ -866,14 +865,6 @@
         window.scrollTo({ top: 0, behavior: 'smooth' });
         const map = { 'page-home': '', 'page-legal': '#legal', 'page-family': '#family', 'page-parser': '#parser' };
         history.pushState(null, '', map[pageId] || '');
-    }
-
-    // Обработчик для кнопки скачивания инсталлятора
-    function downloadInstaller(product) {
-        // Когда будет готов инсталлятор, замените ссылку ниже на реальную
-        alert('Инсталлятор скоро будет доступен для скачивания. Оставьте заявку через форму обратной связи, и мы сообщим о готовности.');
-        // Пример реальной ссылки:
-        // window.location.href = '/installers/' + product + '-setup.exe';
     }
 
     window.addEventListener('popstate', () => {
