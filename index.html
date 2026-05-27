@@ -529,14 +529,15 @@
 
         <div class="products-grid">
             <!-- Юр SaaS -->
-            <a href="#legal" class="product-card card-1" onclick="goTo('page-legal')">
-                <div class="product-icon icon-1">⚖️</div>
-                <h2>Юридический AI-ассистент</h2>
-                <p class="tagline">Проверка договоров за минуты</p>
-                <p class="desc">Находит риски, ошибки и несоответствия в договорах. Без интернета, прямо на вашем компьютере</p>
-                <div class="benefit-chips"><span class="chip">Экономия 5+ часов в неделю</span></div>
-                <div class="price-row"><span class="price">350 ₽</span><span class="price-period">/мес</span><span class="cta-arrow">Подробнее →</span></div>
-            </a>
+            <!-- Юр SaaS -->
+<a href="#legal" class="product-card card-1" onclick="goTo('page-legal')">
+    <div class="product-icon icon-1">⚖️</div>
+    <h2>Юридический AI-ассистент</h2>
+    <p class="tagline">Проверка договоров за минуты</p>
+    <p class="desc">Находит риски, ошибки и несоответствия в договорах. Windows + веб-версия для телефона, синхронизация по коду</p>
+    <div class="benefit-chips"><span class="chip">ПК + телефон</span><span class="chip">Синхронизация</span></div>
+    <div class="price-row"><span class="price">350 ₽</span><span class="price-period">/мес</span><span class="cta-arrow">Подробнее →</span></div>
+</a>
 
             <!-- Бух SaaS -->
             <div class="product-card card-1" style="opacity:0.7; cursor:default;">
@@ -629,6 +630,7 @@
 </div>
 
 <!-- ==================== СТРАНИЦА: ЮРИДИЧЕСКИЙ AI ==================== -->
+<!-- ==================== СТРАНИЦА: ЮРИДИЧЕСКИЙ AI ==================== -->
 <div class="page" id="page-legal">
     <div class="container detail-page">
         <a href="#" class="back-link" onclick="goTo('page-home')">← На главную</a>
@@ -636,11 +638,16 @@
         <div class="detail-hero">
             <div class="left">
                 <h2>Проверка договора за 2 минуты вместо 2 часов</h2>
-                <p class="subtitle">AI-ассистент находит юридические риски, ошибки и несоответствия законам — без интернета, прямо на вашем компьютере</p>
+                <p class="subtitle">AI-ассистент находит юридические риски, ошибки и несоответствия законам — работайте с компьютера или телефона, данные синхронизируются по коду</p>
                 <div class="big-price">350 ₽</div>
                 <div class="big-price-period">в месяц • лицензия на 1 рабочее место</div>
-                <a href="https://drive.google.com/uc?export=download&id=1uoB8mkep7FCko3i8HG8sG2WxpE8xryzr" class="btn-primary btn-accent">⬇️ Скачать бесплатно (пробный период 14 дней)</a>
-                <span class="download-hint">💡 Установите приложение — пробный период 14 дней. Оплата внутри приложения</span>
+                
+                <!-- Кнопки для обеих версий -->
+                <div style="display: flex; flex-direction: column; gap: 12px;">
+                    <a href="https://drive.google.com/uc?export=download&id=1uoB8mkep7FCko3i8HG8sG2WxpE8xryzr" class="btn-primary btn-accent">⬇️ Скачать для Windows (ПК)</a>
+                    <a href="https://legal-webapp-six.vercel.app" class="btn-primary" style="background: #10b981;" target="_blank">📱 Открыть веб-версию (PWA)</a>
+                </div>
+                <span class="download-hint">💡 ПК-версия: установите приложение — пробный период 14 дней. Веб-версия: работает в браузере, можно установить на телефон.</span>
             </div>
             <div class="right">
                 <h4>Что вы получаете</h4>
@@ -650,7 +657,30 @@
                     <li><span class="check">✓</span> Контроль обязательных пунктов договора</li>
                     <li><span class="check">✓</span> Ссылки на актуальные законы</li>
                     <li><span class="check">✓</span> Подсветка проблем прямо в тексте</li>
-                    <li><span class="check">✓</span> Работает без интернета</li>
+                    <li><span class="check">✓</span> Синхронизация ПК и телефона по коду</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Как связать версии -->
+        <h3 class="section-title">📱💻 Две версии — один аккаунт</h3>
+        <div class="pain-solution-grid">
+            <div class="ps-card solution">
+                <h4>🖥️ Десктоп (Windows)</h4>
+                <ul>
+                    <li>Полноценное приложение для ПК</li>
+                    <li>Работает полностью без интернета</li>
+                    <li>Все документы хранятся локально</li>
+                    <li>Генерирует код для синхронизации</li>
+                </ul>
+            </div>
+            <div class="ps-card solution">
+                <h4>📱 Веб-версия (PWA)</h4>
+                <ul>
+                    <li>Работает в браузере на телефоне</li>
+                    <li>Можно установить как приложение</li>
+                    <li>Подключается к ПК-версии по коду</li>
+                    <li>Проверяйте документы на ходу</li>
                 </ul>
             </div>
         </div>
@@ -674,7 +704,7 @@
                     <li>Подсветка всех рискованных фраз красным</li>
                     <li>Автоматический чек-лист: цена, срок, предмет, подписи</li>
                     <li>Конкретная рекомендация: «замените на точную дату»</li>
-                    <li>Всё на вашем компьютере, документы не покидают офис</li>
+                    <li>Начали на ПК → продолжили на телефоне через код</li>
                 </ul>
             </div>
         </div>
@@ -702,9 +732,12 @@
 
         <div class="cta-block">
             <h3>Начните проверять договоры быстрее уже сегодня</h3>
-            <p>14 дней бесплатно • Без ограничений • Без интернета</p>
-            <a href="https://drive.google.com/uc?export=download&id=1uoB8mkep7FCko3i8HG8sG2WxpE8xryzr" class="btn-primary btn-accent">⬇️ Скачать инсталлятор</a>
-            <p class="guarantee">🔒 Документы остаются на вашем компьютере • Windows 7–11</p>
+            <p>14 дней бесплатно • ПК + телефон • Синхронизация по коду</p>
+            <div style="display: flex; flex-direction: column; align-items: center; gap: 12px;">
+                <a href="https://drive.google.com/uc?export=download&id=1uoB8mkep7FCko3i8HG8sG2WxpE8xryzr" class="btn-primary btn-accent">⬇️ Скачать для Windows</a>
+                <a href="https://legal-webapp-six.vercel.app" class="btn-primary" style="background: #10b981;" target="_blank">📱 Открыть веб-версию</a>
+            </div>
+            <p class="guarantee">🔒 Документы остаются на вашем компьютере • Windows 7–11 • iOS/Android через браузер</p>
         </div>
     </div>
     <footer style="border-top:1px solid var(--border); padding:24px 0; text-align:center; color:var(--text-secondary); font-size:0.8rem;">
